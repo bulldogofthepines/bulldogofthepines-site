@@ -24,16 +24,19 @@
     background-repeat: no-repeat;
     }
 
+    /* Mobile: Switches to an aspect-ratio height so nothing is cut off */
     @media (max-width: 768px) {
         .banner {
-            height: 200px; /* Shorter for phone screens */
-            background-size: cover; /* Crops sides instead of squashing dogs */
+            /* This height will now grow and shrink with the phone's width */
+            /* Adjusted for a standard wide banner ratio */
+            height: 35vw; 
+            background-size: 100% 100%; 
         }
         .container {
-            margin: -30px 15px 30px 15px; /* Adds breathing room on sides of phone */
+            margin: -20px 15px 30px 15px; 
             padding: 20px;
         }
-        h1 { font-size: 1.8em; } /* Shrinks title slightly for phone */
+        h1 { font-size: 1.8em; }
     }
 
     .container { 

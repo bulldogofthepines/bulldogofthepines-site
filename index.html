@@ -24,6 +24,18 @@
     background-repeat: no-repeat;
     }
 
+    @media (max-width: 768px) {
+        .banner {
+            height: 200px; /* Shorter for phone screens */
+            background-size: cover; /* Crops sides instead of squashing dogs */
+        }
+        .container {
+            margin: -30px 15px 30px 15px; /* Adds breathing room on sides of phone */
+            padding: 20px;
+        }
+        h1 { font-size: 1.8em; } /* Shrinks title slightly for phone */
+    }
+
     .container { 
         max-width: 700px; 
         margin: -50px auto 50px; 

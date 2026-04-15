@@ -8,9 +8,14 @@
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; }
         .banner { 
     width: 100%; 
-    height: 350px; /* Made it taller so your detailed art pops! */
-    background: #2c3e50 url("./BannerGitHub.jpg") center/cover no-repeat; 
+    height: 400px; 
+    background-color: #cccccc; /* This will show a grey box if the image fails */
+    background-image: url('BannerGitHub.jpg'); 
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     border-bottom: 5px solid #d32f2f; 
+}
 }
         .container { max-width: 700px; margin: -50px auto 50px; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); position: relative; }
         h1 { color: #d32f2f; font-size: 2.5em; margin-bottom: 5px; }

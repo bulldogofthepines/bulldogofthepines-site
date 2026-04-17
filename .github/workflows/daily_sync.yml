@@ -1,0 +1,35 @@
+name: Midnight ChOmp Sync
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs exactly at midnight UTC every day
+  workflow_dispatch: # Allows you to run it manually with one click on GitHub
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install pandas requests
+
+      - name: Run GhoBot
+        run: python ghobot_mirror.py
+        env:
+          # We'll put your bdotptoken keys here in GitHub Secrets
+          EBAY_TOKEN: ${{ secrets.EBAY_TOKEN }}
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name 'BoMaMeMo Bot'
+          git config --global user.email 'bot@bulldogofthepines.com'
+          git add latest_inventory.csv inventory-mirror.html
+          git commit -m "Midnight Inventory ChOmp"
+          git push

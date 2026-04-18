@@ -97,8 +97,12 @@ def generate_ghost_mirror():
         # Clean price for the bot (numbers only)
         price_clean = str(row.get('price', '0.00')).replace(' USD', '').replace('$', '').strip()
 
-        # Condition logic
-        cond_raw = str(row.get('condition', 'used')).lower()
+        # --- THE CONDITION DOUBLE-TRACK ---
+        # 1. Get the raw text exactly as eBay has it (e.g., "New other (see details)")
+        human_condition = str(row.get('condition', 'Used')) 
+        
+        # 2. Keep the simplified version for the Bot's URL logic
+        cond_raw = human_condition.lower()
         display_condition = "New" if "new" in cond_raw else "Used"
         
         # --- THE LITERAL SLASH FIX ---
@@ -136,7 +140,10 @@ def generate_ghost_mirror():
                 <img src="{image}" alt="{title}" style="max-width: 150px;">
             </a>
             <p class="price">${price_clean}</p>
-            <p>Condition: {display_condition}</p>
+            
+            <!-- NOW SHOWS THE RAW EBAY CONDITION TO HUMANS -->
+            <p>Condition: {human_condition}</p>
+            
             <a href="{ebay_url}" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
         </div>"""
         html_content += product_div

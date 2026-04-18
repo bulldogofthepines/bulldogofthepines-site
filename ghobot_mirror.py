@@ -21,7 +21,7 @@ def generate_ghost_mirror():
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Bulldog Inventory Mirror</title>
+    <title>Available Items</title>
     <meta name="robots" content="noindex">
     
     <!-- START DELETE: Font & Canonical Section -->

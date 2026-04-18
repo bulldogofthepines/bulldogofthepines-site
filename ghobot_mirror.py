@@ -53,7 +53,7 @@ def generate_ghost_mirror():
         ebay_url = "https://www.ebay.com/itm/" + item_id
         
         # Correct Schema URLs for GMC
-        schema_context = "https://schema.org"
+        schema_context = "https://schema.org/"
         availability_url = "https://schema.org/InStock"
         condition_url = f"https://schema.org/{'NewCondition' if display_condition == 'New' else 'UsedCondition'}"
 

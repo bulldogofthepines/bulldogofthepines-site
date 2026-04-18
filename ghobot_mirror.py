@@ -54,8 +54,8 @@ def generate_ghost_mirror():
         
         # Correct Schema URLs for GMC
         schema_context = "https://schema.org"
-        availability_url = "https://schema.orgInStock"
-        condition_url = f"https://schema.org{'NewCondition' if display_condition == 'New' else 'UsedCondition'}"
+        availability_url = "https://schema.org/InStock"
+        condition_url = f"https://schema.org/{'NewCondition' if display_condition == 'New' else 'UsedCondition'}"
 
         product_div = f"""
         <div class="product">

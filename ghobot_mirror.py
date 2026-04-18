@@ -23,18 +23,70 @@ def generate_ghost_mirror():
     <meta charset="UTF-8">
     <title>Bulldog Inventory Mirror</title>
     <meta name="robots" content="noindex">
+    
+    <!-- START DELETE: Font & Canonical Section -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Ultra&display=swap" rel="stylesheet">
     <link rel="canonical" href="https://ebay.com" />
+    <!-- END DELETE: Font & Canonical Section -->
+
     <style>
-        body {{ font-family: sans-serif; background: #f4f4f4; color: #333; padding: 20px; }}
-        #product-container {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }}
+        body {{ font-family: sans-serif; background: #f4f4f4; color: #333; margin: 0; padding: 0; }}
+        
+        .banner {{ 
+            width: 100%; 
+            height: 300px; 
+            background-image: url('banner.jpg');
+            background-position: center;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }}
+
+        /* START DELETE: Bulldog Title Styling */
+        h1 {{ 
+            color: #021F00; 
+            font-family: 'Ultra', serif; 
+            font-size: 3.5em;
+            margin: 20px 0 5px 20px; 
+            letter-spacing: -2px; 
+        }}
+
+        .update-tag {{
+            font-family: sans-serif;
+            font-size: 0.3em; 
+            font-style: italic;
+            color: #666;
+            letter-spacing: 0px;
+            vertical-align: middle;
+            margin-left: 10px;
+        }}
+        /* END DELETE: Bulldog Title Styling */
+
+        #product-container {{ 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 20px; 
+            padding: 20px; 
+        }}
+        
         .product {{ background: white; border: 1px solid #ddd; padding: 20px; border-radius: 8px; text-align: center; }}
         img {{ max-width: 100%; height: auto; border-radius: 4px; margin: 10px 0; }}
-        h3 {{ font-size: 1.1rem; height: 3.3em; overflow: hidden; }}
         .price {{ font-weight: bold; color: #b12704; font-size: 1.2rem; }}
+
+        @media (max-width: 768px) {{
+            h1 {{ font-size: 1.8em; letter-spacing: -1px; }}
+            .banner {{ height: 35vw; }}
+        }}
     </style>
 </head>
 <body>
-    <h1>Bulldog of the Pines - Live Inventory Mirror</h1>
+    <div class="banner"></div>
+    
+    <!-- START DELETE: Visible Page Title -->
+    <h1>eBay Inventory Mirror <span class="update-tag">(updates daily)</span></h1>
+    <!-- END DELETE: Visible Page Title -->
+
     <div id="product-container">"""
 
     for index, row in df.iterrows():

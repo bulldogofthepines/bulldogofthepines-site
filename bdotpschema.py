@@ -8,13 +8,15 @@ COLUMNS = {
     'Title': 'ns:Title',
     'Price': './/ns:CurrentPrice',
     'Condition': 'ns:ConditionDisplayName',
-    # ADD THIS LINE:
     'Image': 'ns:PictureDetails/ns:PictureURL' 
 }
 
-# GMC Requirements for the "Sacred Three" Mapping
-GMC_CONDITIONS = {
-    'new': 'new',
-    'refurbished': 'refurbished',
-    'used': 'used'
+# Official Schema.org URLs for GMC Compliance
+# We include the trailing slash here so the bots never "mush" them
+GMC_MAP = {
+    'context': 'https://schema.org/',
+    'in_stock': 'https://schema.org',
+    'out_of_stock': 'https://schema.org',
+    'condition_used': 'https://schema.org',
+    'condition_new': 'https://schema.org'
 }

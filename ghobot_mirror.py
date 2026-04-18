@@ -26,6 +26,7 @@ def generate_ghost_mirror():
     <meta charset="UTF-8">
     <title>Bulldog Inventory Mirror</title>
     <meta name="robots" content="noindex">
+    <link rel="canonical" href="https://ebay.com" />
 </head>
 <body>
     <h1>Bulldog of the Pines - Live Inventory Mirror</h1>

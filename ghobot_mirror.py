@@ -54,12 +54,12 @@ def generate_ghost_mirror():
 
         .update-tag {{
             font-family: sans-serif;
-            font-size: 0.3em; 
+            font-size: 0.2em; 
             font-style: italic;
             color: #666;
             letter-spacing: 0px;
             vertical-align: middle;
-            margin-left: 10px;
+            margin-left: 12px;
         }}
         /* END DELETE: Bulldog Title Styling */
 
@@ -84,7 +84,7 @@ def generate_ghost_mirror():
     <div class="banner"></div>
     
     <!-- START DELETE: Visible Page Title -->
-    <h1>eBay Inventory Mirror <span class="update-tag">(updates daily)</span></h1>
+    <h1>Available Items <span class="update-tag">(updates daily)</span></h1>
     <!-- END DELETE: Visible Page Title -->
 
     <div id="product-container">"""

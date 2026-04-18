@@ -30,7 +30,6 @@ def generate_ghost_mirror():
     <style>
         body {{ font-family: sans-serif; background: #f4f4f4; color: #333; margin: 0; padding: 0; }}
         
-        /* THE BULLDOG BANNER */
         .banner {{ 
             width: 100%; 
             height: 300px; 
@@ -41,12 +40,21 @@ def generate_ghost_mirror():
             background-repeat: no-repeat;
         }}
 
+        .header-section {{ margin: 20px 0 10px 20px; }}
+        
         h1 {{ 
             color: #021F00; 
             font-family: 'Ultra', serif; 
             font-size: 3.5em;
-            margin: 20px 0 5px 20px; 
+            margin: 0;
             letter-spacing: -2px; 
+        }}
+
+        .subtitle {{ 
+            font-size: 1.2rem; 
+            color: #666; 
+            font-style: italic;
+            margin-left: 5px;
         }}
 
         #product-container {{ 
@@ -56,32 +64,48 @@ def generate_ghost_mirror():
             padding: 20px; 
         }}
         
-        .product {{ background: white; border: 1px solid #ddd; padding: 20px; border-radius: 8px; text-align: center; }}
-        img {{ max-width: 100%; height: auto; border-radius: 4px; margin: 10px 0; }}
-        
-        /* LINKED TITLE STYLE */
+        .product {{ 
+            background: white; 
+            border: 1px solid #ddd; 
+            padding: 20px; 
+            border-radius: 8px; 
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }}
+
+        /* FIXED TITLE WRAPPING */
         .item-title {{ 
-            font-size: 1.1rem; 
-            height: 3.3em; 
-            overflow: hidden; 
             text-decoration: none; 
             color: #333; 
+            margin-bottom: 15px;
             display: block;
-            margin-bottom: 10px;
         }}
-        .item-title:hover {{ color: #021F00; }}
+        
+        h3 {{ 
+            font-size: 1.05rem; 
+            margin: 0; 
+            line-height: 1.3;
+            min-height: 3.9em; /* Ensures 3 lines of space so images don't jump up */
+        }}
 
-        .price {{ font-weight: bold; color: #b12704; font-size: 1.2rem; }}
+        img {{ max-width: 100%; height: 200px; object-fit: contain; border-radius: 4px; margin: 10px 0; }}
+        
+        .price {{ font-weight: bold; color: #b12704; font-size: 1.2rem; margin: 10px 0; }}
 
         @media (max-width: 768px) {{
-            h1 {{ font-size: 1.8em; letter-spacing: -1px; margin: 10px; }}
+            h1 {{ font-size: 1.8em; letter-spacing: -1px; }}
             .banner {{ height: 35vw; }}
         }}
     </style>
 </head>
 <body>
     <div class="banner"></div>
-    <h1>Live Inventory Mirror</h1>
+    <div class="header-section">
+        <h1>eBay Inventory Mirror</h1>
+        <span class="subtitle">(updated daily)</span>
+    </div>
     <div id="product-container">"""
 
     for index, row in df.iterrows():
@@ -91,6 +115,8 @@ def generate_ghost_mirror():
         price_clean = str(row.get('price', '0.00')).replace(' USD', '').replace('$', '').strip()
         cond_raw = str(row.get('condition', 'used')).lower()
         display_condition = "New" if "new" in cond_raw else "Used"
+        
+        # LITERAL REDIRECT LINK
         ebay_url = "https://ebay.com" + item_id
         
         product_div = f"""
@@ -119,20 +145,25 @@ def generate_ghost_mirror():
             <a href="{ebay_url}" target="_blank">
                 <img src="{image}" alt="{title}">
             </a>
-            <p class="price">${price_clean}</p>
-            <p>Condition: {display_condition}</p>
-            <a href="{ebay_url}" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View Item on eBay</a>
+            <div class="info-box">
+                <p class="price">${price_clean}</p>
+                <p>Condition: {display_condition}</p>
+                <a href="{ebay_url}" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View Item on eBay</a>
+            </div>
         </div>"""
         html_content += product_div
 
     html_content += """
     </div>
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const itemId = urlParams.get('id');
-        if (itemId) {
-            window.location.href = "https://ebay.com" + itemId;
-        }
+        // FORCED REDIRECT LOGIC
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const itemId = urlParams.get('id');
+            if (itemId && itemId.length > 5) {
+                window.location.replace("https://ebay.com" + itemId);
+            }
+        };
     </script>
 </body>
 </html>"""
@@ -140,9 +171,6 @@ def generate_ghost_mirror():
     with open(output_html, "w", encoding="utf-8") as f:
         f.write(html_content)
     print(f"✅ GhoBot Success! Mirror updated at: {output_html}")
-
-if __name__ == "__main__":
-    generate_ghost_mirror()
 
 if __name__ == "__main__":
     generate_ghost_mirror()

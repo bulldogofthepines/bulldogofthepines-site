@@ -126,7 +126,7 @@ def generate_ghost_mirror():
         display_condition = "New" if "new" in cond_raw else "Used"
         
         # FIXED: Added literal /itm/ and slashes
-        ebay_url = "https://ebay.com/itm/" + item_id
+        ebay_url = "https://www.ebay.com/itm/" + item_id
         
         product_div = f"""
         <div class="product">
@@ -172,7 +172,7 @@ def generate_ghost_mirror():
             const itemId = urlParams.get('id');
             if (itemId && itemId.length > 5) {
                 // FIXED: Literal redirect string
-                window.location.replace("https://ebay.com/itm/" + itemId);
+                window.location.replace("https://www.ebay.com/itm/" + itemId);
             }
         };
     </script>

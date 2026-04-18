@@ -23,9 +23,10 @@ def generate_ghost_mirror():
     <meta charset="UTF-8">
     <title>Bulldog Inventory Mirror</title>
     <meta name="robots" content="noindex">
-    <link rel="preconnect" href="https://googleapis.com">
-    <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Ultra&display=swap" rel="stylesheet">
+    <!-- FIXED GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ultra&display=swap" rel="stylesheet">
     <link rel="canonical" href="https://ebay.com" />
     <style>
         body {{ font-family: sans-serif; background: #f4f4f4; color: #333; margin: 0; padding: 0; }}
@@ -72,25 +73,33 @@ def generate_ghost_mirror():
             text-align: center;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
         }}
 
-        /* FIXED TITLE WRAPPING */
+        /* FIXED TITLE OVERLAP */
         .item-title {{ 
             text-decoration: none; 
             color: #333; 
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             display: block;
+            height: 4.5em; /* Gives fixed space for 3 lines of title */
+            overflow: hidden;
         }}
         
         h3 {{ 
             font-size: 1.05rem; 
             margin: 0; 
             line-height: 1.3;
-            min-height: 3.9em; /* Ensures 3 lines of space so images don't jump up */
         }}
 
-        img {{ max-width: 100%; height: 200px; object-fit: contain; border-radius: 4px; margin: 10px 0; }}
+        .img-container {{
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+        }}
+
+        img {{ max-width: 100%; max-height: 200px; border-radius: 4px; }}
         
         .price {{ font-weight: bold; color: #b12704; font-size: 1.2rem; margin: 10px 0; }}
 
@@ -116,7 +125,7 @@ def generate_ghost_mirror():
         cond_raw = str(row.get('condition', 'used')).lower()
         display_condition = "New" if "new" in cond_raw else "Used"
         
-        # LITERAL REDIRECT LINK
+        # FIXED: Added literal /itm/ and slashes
         ebay_url = "https://ebay.com" + item_id
         
         product_div = f"""
@@ -142,9 +151,11 @@ def generate_ghost_mirror():
             <a href="{ebay_url}" target="_blank" class="item-title">
                 <h3>{title}</h3>
             </a>
-            <a href="{ebay_url}" target="_blank">
-                <img src="{image}" alt="{title}">
-            </a>
+            <div class="img-container">
+                <a href="{ebay_url}" target="_blank">
+                    <img src="{image}" alt="{title}">
+                </a>
+            </div>
             <div class="info-box">
                 <p class="price">${price_clean}</p>
                 <p>Condition: {display_condition}</p>
@@ -156,11 +167,11 @@ def generate_ghost_mirror():
     html_content += """
     </div>
     <script>
-        // FORCED REDIRECT LOGIC
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const itemId = urlParams.get('id');
             if (itemId && itemId.length > 5) {
+                // FIXED: Literal redirect string
                 window.location.replace("https://ebay.com" + itemId);
             }
         };

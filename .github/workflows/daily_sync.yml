@@ -2,34 +2,41 @@ name: Midnight ChOmp Sync
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs exactly at midnight UTC every day
-  workflow_dispatch: # Allows you to run it manually with one click on GitHub
+    - cron: '0 0 * * *'
+  workflow_dispatch: 
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 # Updated to v4 for Node 24
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5 # Updated to v5 for Node 24
         with:
-          python-version: '3.9'
+          python-version: '3.10'
 
       - name: Install dependencies
-        run: pip install pandas requests
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas requests
+
+      - name: Create Backup Folder
+        run: mkdir -p inventory_backups # Prevents Exit Code 2 if folder is missing
 
       - name: Run GhoBot
         run: python ghobot_mirror.py
         env:
-          # We'll put your bdotptoken keys here in GitHub Secrets
           EBAY_TOKEN: ${{ secrets.EBAY_TOKEN }}
+          EBAY_APP_ID: ${{ secrets.EBAY_APP_ID }}
+          EBAY_DEV_ID: ${{ secrets.EBAY_DEV_ID }}
+          EBAY_CERT_ID: ${{ secrets.EBAY_CERT_ID }}
 
       - name: Commit and Push changes
         run: |
           git config --global user.name 'BoMaMeMo Bot'
           git config --global user.email 'bot@bulldogofthepines.com'
-          git add latest_inventory.csv inventory-mirror.html
-          git commit -m "Midnight Inventory ChOmp"
+          git add latest_inventory.csv inventory-mirror.html inventory_backups/*
+          git commit -m "Midnight Inventory ChOmp" || echo "No changes to commit"
           git push

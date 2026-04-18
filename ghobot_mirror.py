@@ -101,13 +101,16 @@ def generate_ghost_mirror():
 </body>
 </html>"""
 
-    with open(output_html, "w", encoding="utf-8") as f:
-        f.write(html_content)
-    
-    print(f"✅ GhoBot Success! Mirror created at: {output_html}")
-
-if __name__ == "__main__":
-    generate_ghost_mirror()
+    try:
+        if os.path.exists(output_html):
+            os.remove(output_html) 
+            
+        with open(output_html, "w", encoding="utf-8") as f:
+            f.write(html_content)
+            
+        print(f"✅ OVERWRITE SUCCESS: {output_html}")
+    except Exception as e:
+        print(f"❌ LOCK ERROR: {e}")
 
 if __name__ == "__main__":
     generate_ghost_mirror()

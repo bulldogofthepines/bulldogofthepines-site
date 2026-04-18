@@ -49,7 +49,8 @@ def get_full_inventory():
         <EntriesPerPage>200</EntriesPerPage>
         <PageNumber>{page_number}</PageNumber>
     </Pagination>
-    <GranularityLevel>Coarse</GranularityLevel>
+    <DetailLevel>ReturnAll</DetailLevel>
+    <GranularityLevel>Fine</GranularityLevel>
 </GetSellerListRequest>"""
 
         response = requests.post(url, data=body.encode('utf-8'), headers=headers)

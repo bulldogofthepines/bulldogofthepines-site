@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import chompbot_fetch 
 
+# Use relative paths for GitHub Actions compatibility
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 latest_csv = os.path.join(BASE_PATH, "latest_inventory.csv")
 output_html = os.path.join(BASE_PATH, "inventory-mirror.html")
@@ -23,90 +24,24 @@ def generate_ghost_mirror():
     <meta charset="UTF-8">
     <title>Bulldog Inventory Mirror</title>
     <meta name="robots" content="noindex">
-    <!-- FIXED GOOGLE FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Ultra&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Ultra&display=swap" rel="stylesheet">
     <link rel="canonical" href="https://ebay.com" />
     <style>
         body {{ font-family: sans-serif; background: #f4f4f4; color: #333; margin: 0; padding: 0; }}
-        
-        .banner {{ 
-            width: 100%; 
-            height: 300px; 
-            background-color: #cccccc; 
-            background-image: url('banner.jpg');
-            background-position: center;
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-        }}
-
+        .banner {{ width: 100%; height: 300px; background-color: #cccccc; background-image: url('banner.jpg'); background-position: center; background-size: 100% 100%; background-repeat: no-repeat; }}
         .header-section {{ margin: 20px 0 10px 20px; }}
-        
-        h1 {{ 
-            color: #021F00; 
-            font-family: 'Ultra', serif; 
-            font-size: 3.5em;
-            margin: 0;
-            letter-spacing: -2px; 
-        }}
-
-        .subtitle {{ 
-            font-size: 1.2rem; 
-            color: #666; 
-            font-style: italic;
-            margin-left: 5px;
-        }}
-
-        #product-container {{ 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-            gap: 20px; 
-            padding: 20px; 
-        }}
-        
-        .product {{ 
-            background: white; 
-            border: 1px solid #ddd; 
-            padding: 20px; 
-            border-radius: 8px; 
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-        }}
-
-        /* FIXED TITLE OVERLAP */
-        .item-title {{ 
-            text-decoration: none; 
-            color: #333; 
-            margin-bottom: 10px;
-            display: block;
-            height: 4.5em; /* Gives fixed space for 3 lines of title */
-            overflow: hidden;
-        }}
-        
-        h3 {{ 
-            font-size: 1.05rem; 
-            margin: 0; 
-            line-height: 1.3;
-        }}
-
-        .img-container {{
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 10px 0;
-        }}
-
+        h1 {{ color: #021F00; font-family: 'Ultra', serif; font-size: 3.5em; margin: 0; letter-spacing: -2px; }}
+        .subtitle {{ font-size: 1.2rem; color: #666; font-style: italic; margin-left: 5px; }}
+        #product-container {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 20px; }}
+        .product {{ background: white; border: 1px solid #ddd; padding: 20px; border-radius: 8px; text-align: center; display: flex; flex-direction: column; }}
+        .item-title {{ text-decoration: none; color: #333; margin-bottom: 10px; display: block; height: 4.5em; overflow: hidden; }}
+        h3 {{ font-size: 1.05rem; margin: 0; line-height: 1.3; }}
+        .img-container {{ height: 200px; display: flex; align-items: center; justify-content: center; margin: 10px 0; }}
         img {{ max-width: 100%; max-height: 200px; border-radius: 4px; }}
-        
         .price {{ font-weight: bold; color: #b12704; font-size: 1.2rem; margin: 10px 0; }}
-
-        @media (max-width: 768px) {{
-            h1 {{ font-size: 1.8em; letter-spacing: -1px; }}
-            .banner {{ height: 35vw; }}
-        }}
+        @media (max-width: 768px) {{ h1 {{ font-size: 1.8em; letter-spacing: -1px; }} .banner {{ height: 35vw; }} }}
     </style>
 </head>
 <body>
@@ -125,8 +60,8 @@ def generate_ghost_mirror():
         cond_raw = str(row.get('condition', 'used')).lower()
         display_condition = "New" if "new" in cond_raw else "Used"
         
-        # FIXED: Added literal /itm/ and slashes
-        ebay_url = "https://www.ebay.com/itm/" + item_id
+        # --- THE LITERAL /itm/ FIX ---
+        ebay_url = "https://ebay.com" + item_id
         
         product_div = f"""
         <div class="product">
@@ -171,8 +106,8 @@ def generate_ghost_mirror():
             const urlParams = new URLSearchParams(window.location.search);
             const itemId = urlParams.get('id');
             if (itemId && itemId.length > 5) {
-                // FIXED: Literal redirect string
-                window.location.replace("https://www.ebay.com/itm/" + itemId);
+                // THE LITERAL /itm/ REDIRECT FIX
+                window.location.replace("https://ebay.com" + itemId);
             }
         };
     </script>

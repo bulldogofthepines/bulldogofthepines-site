@@ -10,7 +10,8 @@ import os
 from datetime import datetime
 
 # 1. Setup the Home Base (OneDrive Desktop)
-BASE_PATH = r'C:\Users\durge\OneDrive\Desktop\BoMaMeMo'
+# Setup the folder using relative paths
+BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 BACKUP_FOLDER = os.path.join(BASE_PATH, 'inventory_backups')
 
 # 2. Create the folder if it's missing

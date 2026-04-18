@@ -10,7 +10,6 @@ import os
 from datetime import datetime
 
 # 1. Setup the Home Base (OneDrive Desktop)
-# Setup the folder using relative paths
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 BACKUP_FOLDER = os.path.join(BASE_PATH, 'inventory_backups')
 
@@ -40,6 +39,7 @@ def get_full_inventory():
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/123.0.0.0 Safari/537.36",
         }
 
+        # --- HIGH DETAIL REQUEST ---
         body = f"""<?xml version="1.0" encoding="utf-8"?>
 <GetSellerListRequest xmlns="urn:ebay:apis:eBLBaseComponents">
     <RequesterCredentials><eBayAuthToken>{keys.TOKEN.strip()}</eBayAuthToken></RequesterCredentials>
@@ -78,10 +78,10 @@ def get_full_inventory():
                     'title': clean_title,
                     'description': f"Quality part from Bulldog of the Pines. eBay Condition: {raw_ebay_condition}",
                     'link': f"https://bulldogofthepines.com{item_id}",
-                    'image_link': item.findtext(schema.COLUMNS['Image'], default="https://bulldogofthepines.combanner.jpg", namespaces=namespace),
+                    'image_link': item.findtext(schema.COLUMNS['Image'], default="https://bulldogofthepines.com", namespaces=namespace),
                     'price': f"{item.findtext(schema.COLUMNS['Price'], namespaces=namespace)} USD",
                     'availability': 'in_stock',
-                    # --- THE NEW SPLIT ---
+                    # --- THE DOUBLE-TRACK SPLIT ---
                     'condition': cond_bundle['gmc'],     # 'new', 'used', or 'refurbished' for Google
                     'raw_condition': cond_bundle['human'] # The full eBay text for your Mirror
                 })
@@ -98,23 +98,21 @@ def get_full_inventory():
     if all_items:
         df_master = pd.DataFrame(all_items)
         
-        master_name = f"bulldog_inventory_{STAMP}.csv"
-        google_name = f"GMC_Upload_{STAMP}.csv"
-        
-        # Save Dated files INTO the backup folder
-        df_master.to_csv(os.path.join(BACKUP_FOLDER, master_name), index=False)
-        
-        # Save latest_inventory into the BASE BoMaMeMo folder
+        # Save files
+        df_master.to_csv(os.path.join(BACKUP_FOLDER, f"bulldog_inventory_{STAMP}.csv"), index=False)
         df_master.to_csv(os.path.join(BASE_PATH, "latest_inventory.csv"), index=False)
         
-        # Create and save Google feed into the backup folder
+        # GMC specific upload file (only needs the bot-friendly 'condition' column)
         google_cols = ['id', 'title', 'description', 'link', 'image_link', 'price', 'availability', 'condition']
         df_google = df_master[google_cols]
-        df_google.to_csv(os.path.join(BACKUP_FOLDER, google_name), index=False)
+        df_google.to_csv(os.path.join(BACKUP_FOLDER, f"GMC_Upload_{STAMP}.csv"), index=False)
         
         print(f"✅ MISSION COMPLETE! Files in: {BASE_PATH}")
     else:
         print("🤷 No data found.")
+
+if __name__ == "__main__":
+    get_full_inventory()
 
 if __name__ == "__main__":
     get_full_inventory()

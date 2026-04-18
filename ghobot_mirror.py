@@ -98,12 +98,13 @@ def generate_ghost_mirror():
         price_clean = str(row.get('price', '0.00')).replace(' USD', '').replace('$', '').strip()
 
         # --- THE CONDITION DOUBLE-TRACK ---
-        # 1. Get the raw text exactly as eBay has it (e.g., "New other (see details)")
-        human_condition = str(row.get('condition', 'Used')) 
+        # 1. Pull the "Raw Truth" from the new CSV column
+        human_condition = str(row.get('raw_condition', row.get('condition', 'Used'))) 
         
-        # 2. Keep the simplified version for the Bot's URL logic
-        cond_raw = human_condition.lower()
-        display_condition = "New" if "new" in cond_raw else "Used"
+        # 2. Keep the simplified logic for the Bot's URL
+        # We check the human_condition for the word "new" to decide the Schema URL
+        is_new = "new" in human_condition.lower()
+        display_condition = "New" if is_new else "Used"
         
         # --- THE LITERAL SLASH FIX ---
         ebay_url = "https://www.ebay.com/itm/" + item_id

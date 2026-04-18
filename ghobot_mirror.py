@@ -2,8 +2,8 @@ import pandas as pd
 import os
 import chompbot_fetch  # This links GhoBot to your sweep script
 
-# 1. Setup the Home Base
-BASE_PATH = r'C:\Users\durge\OneDrive\Desktop\BoMaMeMo'
+# Use relative paths so it works on your PC AND on GitHub's servers
+BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 latest_csv = os.path.join(BASE_PATH, "latest_inventory.csv")
 output_html = os.path.join(BASE_PATH, "inventory-mirror.html")
 

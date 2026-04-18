@@ -64,11 +64,12 @@ def get_full_inventory():
             for item in items:
                 item_id = str(item.findtext(schema.COLUMNS['ItemID'], namespaces=namespace)).strip()
                 
-                # --- MAKE SURE THIS NAME MATCHES THE ONE IN DESCRIPTION ---
+                # 1. Grab the raw text from eBay (e.g., "New other (see details)")
                 raw_ebay_condition = item.findtext(schema.COLUMNS['Condition'], default='Used', namespaces=namespace)
                 
-                # Use the new modular "Brains"
-                google_condition = rules.map_condition(raw_ebay_condition) 
+                # 2. Get the "Bundle" from your upgraded condrules.py
+                cond_bundle = rules.map_condition(raw_ebay_condition) 
+                
                 clean_title = seo.clean_title(item.findtext(schema.COLUMNS['Title'], namespaces=namespace))                   
 
                 all_items.append({
@@ -80,7 +81,9 @@ def get_full_inventory():
                     'image_link': item.findtext(schema.COLUMNS['Image'], default="https://bulldogofthepines.combanner.jpg", namespaces=namespace),
                     'price': f"{item.findtext(schema.COLUMNS['Price'], namespaces=namespace)} USD",
                     'availability': 'in_stock',
-                    'condition': google_condition
+                    # --- THE NEW SPLIT ---
+                    'condition': cond_bundle['gmc'],     # 'new', 'used', or 'refurbished' for Google
+                    'raw_condition': cond_bundle['human'] # The full eBay text for your Mirror
                 })
 
             print(f"Bagged {len(all_items)} items...")

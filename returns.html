@@ -2,17 +2,79 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Shipping & Returns | BullDog of the Pines</title>
-    <style>body { font-family: sans-serif; padding: 40px; line-height: 1.6; max-width: 800px; margin: auto; }</style>
+    <title>Shipping & Returns | Bulldog of the Pines</title>
+    
+    <!-- Load the Ultra Font -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Ultra&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: sans-serif; background: #f4f4f4; color: #333; margin: 0; padding: 0; }
+        
+        /* The Branded Banner */
+        .banner { 
+            width: 100%; 
+            height: 300px; 
+            background-image: url('banner.jpg');
+            background-position: center;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        /* The Ultra Title Style */
+        h1 { 
+            color: #021F00; 
+            font-family: 'Ultra', serif; 
+            font-size: 3.5em;
+            margin: 20px 0 5px 20px; 
+            letter-spacing: -2px; 
+        }
+
+        /* The Content Container */
+        .container {
+            background: white;
+            margin: 20px;
+            padding: 40px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            max-width: 900px;
+            line-height: 1.8;
+        }
+
+        h3 { 
+            color: #021F00; 
+            border-bottom: 2px solid #021F00; 
+            display: inline-block;
+            margin-top: 30px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin: 20px;
+            color: #021F00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8em; letter-spacing: -1px; }
+            .banner { height: 35vw; }
+        }
+    </style>
 </head>
 <body>
-    <h1>Shipping & Returns Policy</h1>
-    <h3>Shipping</h3>
-    <p>We will pack your items tight and do our best to ensure your new item gets to you in a prompt time frame.  Our listings come with 5 business day standard shipping and a 1 business day handling time.  We almost never use the 1 business day handling time and try to get all items to you within 3-4 days inside the contiguous 48 states. Although we will attempt to get your packages to you within 3-4 days after payment, we cannot guarantee this once the package leaves our possession.  On rare occasions carriers can lose packages and this may delay shipping. Rural areas & adverse weather conditions may also delay shipping.  Orders originating outside the US or not a part of the contiguous 48 states may take a little longer to get to you.  Overseas shipping is recommended using the eBay International Shipping Program so you can be protected by eBay's Money Back Guarantee if the package should be lost in transit.  You will always receive tracking info and if there are any issues with shipping please reach out to us before leaving a review so we can help you solve any problems that may arise.</p>
+    <div class="banner"></div>
+    <h1>Shipping & Returns</h1>
     
-    <h3>Returns & Refunds</h3>
-    <p>We will offer 30-Day returns on most of our items and refunds will be to original payment method.  It is our goal to make sure you get what we advertised in our images and listings.  Some used items or items listed as 'Parts Not Working' may not come with a return policy but we are always willing to work with our customers.  If you are unsatisfied or simply made a mistake on your order please contact us and we will always try to work it out with you.  If you do need to return your item or cancel an order please use eBay's return system so there is record of the return in case the carrier loses the package on its way back.</p>
-    
-    <p><a href="index.html">← Back to Home</a></p>
+    <div class="container">
+        <h3>Shipping</h3>
+        <p>We will pack your items tight and do our best to ensure your new item gets to you in a prompt time frame. Our listings come with 5 business day standard shipping and a 1 business day handling time. We almost never use the 1 business day handling time and try to get all items to you within 3-4 days inside the contiguous 48 states. Although we will attempt to get your packages to you within 3-4 days after payment, we cannot guarantee this once the package leaves our possession. On rare occasions carriers can lose packages and this may delay shipping. Rural areas & adverse weather conditions may also delay shipping. Orders originating outside the US or not a part of the contiguous 48 states may take a little longer to get to you. Overseas shipping is recommended using the eBay International Shipping Program so you can be protected by eBay's Money Back Guarantee if the package should be lost in transit. You will always receive tracking info and if there are any issues with shipping please reach out to us before leaving a review so we can help you solve any problems that may arise.</p>
+        
+        <h3>Returns & Refunds</h3>
+        <p>We will offer 30-Day returns on most of our items and refunds will be to original payment method. It is our goal to make sure you get what we advertised in our images and listings. Some used items or items listed as 'Parts Not Working' may not come with a return policy but we are always willing to work with our customers. If you are unsatisfied or simply made a mistake on your order please contact us and we will always try to work it out with you. If you do need to return your item or cancel an order please use eBay's return system so there is record of the return in case the carrier loses the package on its way back.</p>
+    </div>
+
+    <a href="index.html" class="back-link">← Back to Home</a>
 </body>
 </html>

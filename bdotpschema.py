@@ -7,7 +7,8 @@ COLUMNS = {
     'ItemID': 'ns:ItemID',
     'Title': 'ns:Title',
     'Price': './/ns:CurrentPrice',
-    'Condition': 'ns:ConditionDisplayName',
+    # THIS LINE MUST USE ns:ConditionDisplayName
+    'Condition': 'ns:ConditionDisplayName', 
     'Image': 'ns:PictureDetails/ns:PictureURL' 
 }
 

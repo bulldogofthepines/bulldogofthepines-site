@@ -2,86 +2,11 @@ import pandas as pd
 import os
 import chompbot_fetch 
 import catpro  # Logic for the Bulldog Buckets
+import rezbot
 
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 latest_csv = os.path.join(BASE_PATH, "latest_inventory.csv")
 output_html = os.path.join(BASE_PATH, "inventory-mirror.html")
-
-def build_aisle_page(cat_name, sub_df, filename):
-    path = os.path.join(BASE_PATH, filename)
-    
-    # Start the Aisle Page HTML
-    aisle_html = f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{cat_name} | Bulldog of the Pines</title>
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://bulldogofthepines.com{filename}" />
-    <style>
-        body {{ font-family: sans-serif; background: #f4f4f4; color: #333; margin: 0; padding: 0; }}
-        #product-container {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 20px; }}
-        .product {{ background: white; border: 1px solid #ddd; padding: 20px; border-radius: 8px; text-align: center; }}
-        img {{ max-width: 100%; height: auto; border-radius: 4px; margin: 10px 0; }}
-        .price {{ font-weight: bold; color: #b12704; font-size: 1.2rem; }}
-    </style>
-</head>
-<body>
-    <div style="padding: 20px;"><a href="inventory-mirror.html" style="color: #021F00; font-weight: bold; text-decoration: none;">← Back to All Categories</a></div>
-    <h1 style="margin-left: 20px;">{cat_name}</h1>
-    <div id="product-container">"""
-
-    # --- YOUR MOVED LOGIC STARTS HERE ---
-    for index, row in sub_df.iterrows():
-        item_id = str(row.get('id', row.get('ItemID', 'N/A')))
-        title = str(row.get('title', row.get('Title', 'N/A'))).replace('"', "'")
-        image = str(row.get('image_link', row.get('Image', '')))
-        price_clean = str(row.get('price', '0.00')).replace(' USD', '').replace('$', '').strip()
-        human_condition = str(row.get('raw_condition', row.get('condition', 'Used')))
-        is_new = "new" in human_condition.lower()
-        display_condition = "New" if is_new else "Used"
-        ebay_url = "https://www.ebay.com/itm/" + item_id
-        
-        # Schema URLs for GMC
-        condition_url = f"https://schema.org/{'NewCondition' if display_condition == 'New' else 'UsedCondition'}"
-
-        product_div = f"""
-        <div class="product">
-            <script type="application/ld+json">
-            {{
-                "@context": "https://schema.org/",
-                "@type": "Product",
-                "name": "{title}",
-                "image": "{image}",
-                "description": "{row.get('description', 'Quality Part')}",
-                "sku": "{row.get('SKU', 'N/A')}",
-                "offers": {{
-                    "@type": "Offer",
-                    "url": "{ebay_url}",
-                    "priceCurrency": "USD",
-                    "price": "{price_clean}",
-                    "availability": "https://schema.org/InStock",
-                    "itemCondition": "{condition_url}"
-                }}
-            }}
-            </script>
-            <a href="{ebay_url}" target="_blank" style="text-decoration:none; color:inherit;">
-                <h3>{title}</h3>
-            </a>
-            <img src="{image}" alt="{title}" style="max-width: 150px;">
-            <p class="price">${price_clean}</p>
-            <p>Condition: {human_condition}</p>
-            <a href="{ebay_url}" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
-        </div>"""
-        
-        # Add to the specific Aisle page content
-        aisle_html += product_div
-
-    # Close the Aisle Page
-    aisle_html += "</div></body></html>"
-
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(aisle_html)
 
 def generate_ghost_mirror():
     print("🔄 GhoBot is signaling ChOmpBot to start the sweep...")
@@ -180,33 +105,26 @@ def generate_ghost_mirror():
 
     for cat_name, sub_df in grouped_data.items():
         if not sub_df.empty:
-            # Match your GitHub image titles
             img_file = catpro.cat_images.get(cat_name, "Other.JPG")
-            # Create a clean filename for the aisle page
             safe_name = cat_name.replace(" ", "_").replace(",", "").replace("&", "")
             aisle_filename = f"{safe_name}.html"
             
-            # Add to the Hub Menu
+            # Link to the Aisle Page
             html_content += f"""
             <a href="{aisle_filename}" style="text-decoration: none; color: #021F00;">
                 <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; text-align: center;">
-                    <img src="{img_file}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 4px;">
+                    <img src="{img_file}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 4px;">
                     <h3>{cat_name}</h3>
-                    <p>{len(sub_df)} Items Available</p>
                 </div>
             </a>"""
 
-            # --- STEP 2: BUILD THE INDIVIDUAL AISLE PAGE ---
-            # This wipes the old file and creates the new one with current items
-            build_aisle_page(cat_name, sub_df, aisle_filename)
-
-    html_content += '</div>'
-
-    # NEXT: Open the product container (Notice the += and NO f(plus 3 quotes) template reset)
-    html_content += '<div id="product-container">'
+            # --- STEP 2: SIGNAL REZBOT TO BUILD THE AISLE ---
+            # This triggers the resurrection of the individual category page
+            rezbot.build_aisle_page(cat_name, sub_df, aisle_filename)
 
     # Lines 159-228 go here
-    
+
+    # Close the Hub Menu Grid and the Page
     html_content += """
     </div>
     </body>

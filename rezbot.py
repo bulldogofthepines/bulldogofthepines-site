@@ -43,7 +43,12 @@ def build_aisle_page(cat_name, sub_df, filename):
             <a href="{ebay_url}" target="_blank" style="text-decoration:none; color:inherit;">
                 <h3>{title}</h3>
             </a>
-            <img src="{image}" alt="{title}" style="max-width: 150px;">
+            
+            <!-- THE FIX: Wrap the image in the eBay link -->
+            <a href="{ebay_url}" target="_blank">
+                <img src="{image}" alt="{title}" style="max-width: 150px;">
+            </a>
+            
             <p class="price">${price_clean}</p>
             <p>Condition: {human_condition}</p>
             <a href="{ebay_url}" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>

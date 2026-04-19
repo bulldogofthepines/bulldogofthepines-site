@@ -41,10 +41,11 @@ jobs:
 
       - name: Commit and Push changes
         run: |
-          git config --global user.name 'BoMaMeMo Bot'
-          git config --global user.email 'bot@bulldogofthepines.com'
-          # Add all new/updated files
-          git add latest_inventory.csv inventory-mirror.html inventory_backups/
-          # Commit only if there are changes; if not, don't fail
-          git commit -m "Midnight Inventory ChOmp" || exit 0
-          git push origin main
+        git config --global user.name 'BoMaMeMo Bot'
+        git config --global user.email 'bot@bulldogofthepines.com'
+        # This catches EVERYTHING: The new CSV, the Backups, 
+        # and the new Category HTML files RezBot created.
+        git add -A 
+        # If nothing changed, exit quietly so the build doesn't "fail"
+        git commit -m "Midnight Inventory: ChOmp & RezBot Resurrection" || exit 0
+        git push origin main

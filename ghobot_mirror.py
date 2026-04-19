@@ -103,14 +103,9 @@ def generate_ghost_mirror():
             safe_id = cat_name.replace(" ", "").replace(",", "").replace("&", "")
             # Pull the literal filename from catpro
             img_file = catpro.cat_images.get(cat_name, "Other.JPG")
+            # One-liner to stop the IndentationErrors for good
+            html_content += f'<a href="#{safe_id}" style="text-decoration: none; text-align: center; color: #021F00;"><div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 10px;"><img src="{img_file}" style="width: 100%; height: 80px; object-fit: cover; border-radius: 4px;"><p style="font-weight: bold; margin-top: 10px; font-size: 0.8em;">{cat_name}</p></div></a>'
             
-            html_content += f"""
-        <a href="#{safe_id}" style="text-decoration: none; text-align: center; color: #021F00;">
-            <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 10px;">
-                <img src="{img_file}" style="width: 100%; height: 80px; object-fit: cover; border-radius: 4px;">
-                <p style="font-weight: bold; margin-top: 10px; font-size: 0.8em;">{cat_name}</p>
-            </div>
-        </a>"""
     # ... Your Category Grid Loop finishes here ...
     html_content += '</div>'
 
@@ -122,10 +117,9 @@ def generate_ghost_mirror():
         if not sub_df.empty:
             # 1. Add the Category Header (With the ID for the Jump Link)
             safe_id = cat_name.replace(" ", "").replace(",", "").replace("&", "")
-            # 1. Create the matching ID first
+            # 2. Create the matching ID first
             safe_id = cat_name.replace(" ", "").replace(",", "").replace("&", "")
-
-            # 2. Inject that ID into the header div
+            # 3. Inject that ID into the header div
             html_content += f'<div id="{safe_id}" class="category-header" style="grid-column: 1/-1; background: #021F00; color: white; padding: 15px; margin: 20px 0; border-radius: 8px; font-family: Ultra, serif;">{cat_name}</div>'
             
             for index, row in sub_df.iterrows():

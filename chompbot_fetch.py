@@ -70,7 +70,10 @@ def get_full_inventory():
                 # 2. Get the "Bundle" from your upgraded condrules.py
                 cond_bundle = rules.map_condition(raw_ebay_condition) 
                 
-                clean_title = seo.clean_title(item.findtext(schema.COLUMNS['Title'], namespaces=namespace))                   
+                clean_title = seo.clean_title(item.findtext(schema.COLUMNS['Title'], namespaces=namespace))
+
+                # Pull the Category Name from the eBay XML
+                category_name = item.findtext(schema.COLUMNS['CategoryName'], default='Other', namespaces=namespace)
 
                 all_items.append({
                     'SKU': item.findtext(schema.COLUMNS['SKU'], default='N/A', namespaces=namespace),

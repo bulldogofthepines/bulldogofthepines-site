@@ -117,9 +117,7 @@ def generate_ghost_mirror():
         if not sub_df.empty:
             # 1. Add the Category Header (With the ID for the Jump Link)
             safe_id = cat_name.replace(" ", "").replace(",", "").replace("&", "")
-            # 2. Create the matching ID first
-            safe_id = cat_name.replace(" ", "").replace(",", "").replace("&", "")
-            # 3. Inject that ID into the header div
+            # 2. Inject that ID into the header div
             html_content += f'<div id="{safe_id}" class="category-header" style="grid-column: 1/-1; background: #021F00; color: white; padding: 15px; margin: 20px 0; border-radius: 8px; font-family: Ultra, serif;">{cat_name}</div>'
             
             for index, row in sub_df.iterrows():

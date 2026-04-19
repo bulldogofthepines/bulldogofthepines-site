@@ -33,7 +33,7 @@ def build_aisle_page(cat_name, sub_df, filename):
         image = str(row.get('image_link', row.get('Image', '')))
         price_clean = str(row.get('price', '0.00')).replace(' USD', '').replace('$', '').strip()
         human_condition = str(row.get('raw_condition', row.get('condition', 'Used')))
-        ebay_url = "https://ebay.com" + item_id
+        ebay_url = "https://ebay.com/itm/" + item_id
 
         aisle_html += f"""
         <div class="product">

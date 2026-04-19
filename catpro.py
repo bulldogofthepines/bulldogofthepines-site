@@ -4,7 +4,7 @@ def group_inventory_by_cat(df):
     # Your target buckets
     target_cats = [
         "Business & Industrial", 
-        "Clothing, Shoes, & Accessories", 
+        "Clothing, Shoes & Accessories", 
         "eBay Motors", 
         "Toys & Hobbies", 
         "Home & Garden"

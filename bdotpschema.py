@@ -3,13 +3,16 @@
 
 # bdotpschema.py
 COLUMNS = {
+    # This line pulls Category
+    'CategoryName': 'ns:PrimaryCategory/ns:CategoryName',
+    # Original pulls
     'SKU': 'ns:SKU',
     'ItemID': 'ns:ItemID',
     'Title': 'ns:Title',
     'Price': './/ns:CurrentPrice',
     # THIS LINE MUST USE ns:ConditionDisplayName
     'Condition': 'ns:ConditionDisplayName', 
-    'Image': 'ns:PictureDetails/ns:PictureURL' 
+    'Image': 'ns:PictureDetails/ns:PictureURL'
 }
 
 # Official Schema.org URLs for GMC Compliance

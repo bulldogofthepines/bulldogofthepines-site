@@ -93,6 +93,7 @@ def generate_ghost_mirror():
     
         <h1>Available Items <span class="update-tag">(updates daily)</span></h1>
         <!-- END DELETE: Navigation & Page Title -->
+        """ # <--- ADD THIS HERE TO CLOSE THE STRING
     
         # Build the Visual Category Grid
         html_content += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; padding: 20px;">'

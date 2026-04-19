@@ -94,12 +94,39 @@ def generate_ghost_mirror():
     <h1>Available Items <span class="update-tag">(updates daily)</span></h1>
     <!-- END DELETE: Navigation & Page Title -->
 
-    <div id="product-container">"""
-
+    # Build the Visual Category Grid
+    html_content += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; padding: 20px;">'
+    
     for cat_name, sub_df in grouped_data.items():
         if not sub_df.empty:
-            # 1. Add the Category Header ONCE before the products in that category
-            html_content += f'<div class="category-header" style="grid-column: 1/-1; background: #021F00; color: white; padding: 15px; margin: 20px 0; border-radius: 8px; font-family: Ultra, serif;">{cat_name}</div>'
+            # Create a clean ID for the jump link
+            safe_id = cat_name.replace(" ", "").replace(",", "").replace("&", "")
+            # Pull the literal filename from catpro
+            img_file = catpro.cat_images.get(cat_name, "Other.JPG")
+            
+            html_content += f"""
+            <a href="#{safe_id}" style="text-decoration: none; text-align: center; color: #021F00;">
+                <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 10px;">
+                    <img src="{img_file}" style="width: 100%; height: 80px; object-fit: cover; border-radius: 4px;">
+                    <p style="font-weight: bold; margin-top: 10px; font-size: 0.8em;">{cat_name}</p>
+                </div>
+            </a>"""
+    # ... Your Category Grid Loop finishes here ...
+    html_content += '</div>'
+
+    # NEXT: Open the product container (Notice the += and NO f""" template reset)
+    html_content += '<div id="product-container">'
+
+    # START: The Item Loop
+    for cat_name, sub_df in grouped_data.items():
+        if not sub_df.empty:
+            # 1. Add the Category Header (With the ID for the Jump Link)
+            safe_id = cat_name.replace(" ", "").replace(",", "").replace("&", "")
+            # 1. Create the matching ID first
+            safe_id = cat_name.replace(" ", "").replace(",", "").replace("&", "")
+
+            # 2. Inject that ID into the header div
+            html_content += f'<div id="{safe_id}" class="category-header" style="grid-column: 1/-1; background: #021F00; color: white; padding: 15px; margin: 20px 0; border-radius: 8px; font-family: Ultra, serif;">{cat_name}</div>'
             
             for index, row in sub_df.iterrows():
                 # 1. Define all data variables FIRST

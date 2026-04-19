@@ -102,80 +102,65 @@ def generate_ghost_mirror():
             html_content += f'<div class="category-header" style="grid-column: 1/-1; background: #021F00; color: white; padding: 15px; margin: 20px 0; border-radius: 8px; font-family: Ultra, serif;">{cat_name}</div>'
             
             for index, row in sub_df.iterrows():
-                # ... [Keep all your item_id, title, price_clean, product_div logic here] ...
-                
-                # Add the product to the content
+                # 1. Define all data variables FIRST
+                item_id = str(row.get('id', row.get('ItemID', 'N/A')))
+                title = str(row.get('title', row.get('Title', 'N/A'))).replace('"', "'")
+                image = str(row.get('image_link', row.get('Image', '')))
+                price_clean = str(row.get('price', '0.00')).replace(' USD', '').replace('$', '').strip()
+                human_condition = str(row.get('raw_condition', row.get('condition', 'Used')))
+                is_new = "new" in human_condition.lower()
+                display_condition = "New" if is_new else "Used"
+                ebay_url = "https://www.ebay.com/itm/" + item_id
+                schema_context = "https://schema.org/"
+                availability_url = "https://schema.org/InStock"
+                condition_url = f"https://schema.org/{'NewCondition' if display_condition == 'New' else 'UsedCondition'}"
+
+                # 2. Build the product HTML string SECOND
+                product_div = f"""
+                <div class="product">
+                    <script type="application/ld+json">
+                        {{
+                        "@context": "{schema_context}",
+                        "@type": "Product",
+                        "name": "{title}",
+                        "image": "{image}",
+                        "description": "{row.get('description', 'Quality Part')}",
+                        "sku": "{row.get('SKU', 'N/A')}",
+                        "offers": {{
+                            "@type": "Offer",
+                            "url": "{ebay_url}",
+                            "priceCurrency": "USD",
+                            "price": "{price_clean}",
+                            "availability": "{availability_url}",
+                            "itemCondition": "{condition_url}"
+                            }}
+                        }}
+                    </script>
+                    <a href="{ebay_url}" target="_blank" style="text-decoration:none; color:inherit;">
+                    <h3>{title}</h3>
+                    </a>
+                    <a href="{ebay_url}" target="_blank">
+                        <img src="{image}" alt="{title}" style="max-width: 150px;">
+                    </a>
+                    <p class="price">${price_clean}</p>
+                    <p>Condition: {human_condition}</p>
+                    <a href="{ebay_url}" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
+                </div>"""
+
+                # 3. Add to the page content LAST
                 html_content += product_div
-            item_id = str(row.get('id', row.get('ItemID', 'N/A')))
-            title = str(row.get('title', row.get('Title', 'N/A'))).replace('"', "'") 
-            image = str(row.get('image_link', row.get('Image', '')))
-        
-            # Clean price for the bot (numbers only)
-            price_clean = str(row.get('price', '0.00')).replace(' USD', '').replace('$', '').strip()
 
-            # --- THE CONDITION DOUBLE-TRACK ---
-            # 1. Pull the "Raw Truth" from the new CSV column
-            human_condition = str(row.get('raw_condition', row.get('condition', 'Used'))) 
-        
-            # 2. Keep the simplified logic for the Bot's URL
-            # We check the human_condition for the word "new" to decide the Schema URL
-            is_new = "new" in human_condition.lower()
-            display_condition = "New" if is_new else "Used"
-        
-            # --- THE LITERAL SLASH FIX ---
-            ebay_url = "https://www.ebay.com/itm/" + item_id
-        
-            # Correct Schema URLs for GMC
-            schema_context = "https://schema.org/"
-            availability_url = "https://schema.org/InStock"
-            condition_url = f"https://schema.org/{'NewCondition' if display_condition == 'New' else 'UsedCondition'}"
+            # --- EXIT BOTH LOOPS HERE ---
+            html_content += "</div>" # This closes the #product-container grid once.
 
-        product_div = f"""
-        <div class="product">
-            <script type="application/ld+json">
-            {{
-              "@context": "{schema_context}",
-              "@type": "Product",
-              "name": "{title}",
-              "image": "{image}",
-              "description": "{row.get('description', 'Quality Part')}",
-              "sku": "{row.get('SKU', 'N/A')}",
-              "offers": {{
-                "@type": "Offer",
-                "url": "{ebay_url}",
-                "priceCurrency": "USD",
-                "price": "{price_clean}",
-                "availability": "{availability_url}",
-                "itemCondition": "{condition_url}"
-              }}
-            }}
-            </script>
-                <a href="{ebay_url}" target="_blank" style="text-decoration:none; color:inherit;">
-                <h3>{title}</h3>
-                </a>
-                <a href="{ebay_url}" target="_blank">
-                <img src="{image}" alt="{title}" style="max-width: 150px;">
-                </a>
-                <p class="price">${price_clean}</p>
-            
-                <!-- NOW SHOWS THE RAW EBAY CONDITION TO HUMANS -->
-                <p>Condition: {human_condition}</p>
-            
-                <a href="{ebay_url}" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
-            </div>""" # This </div> closes the individual product box.
-            html_content += product_div
-
-# --- EXIT BOTH LOOPS HERE ---
-html_content += "</div>" # This closes the #product-container grid once.
-
-html_content += """ 
-<script>
-    const urlParams = new URLSearchParams(window.location.search);
-        const itemId = urlParams.get('id');
-        if (itemId) {
-            window.location.href = "https://www.ebay.com/itm/" + itemId;
-        }
-    </script>
+        html_content += """ 
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const itemId = urlParams.get('id');
+            if (itemId) {
+                window.location.href = "https://www.ebay.com/itm/" + itemId;
+            }
+        </script>
 </body>
 </html>"""
 

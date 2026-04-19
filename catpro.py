@@ -1,5 +1,15 @@
 import pandas as pd
 
+# The Visual Mapping
+cat_images = {
+    "Business & Industrial": "business.jpg",
+    "Clothing, Shoes & Accessories": "clothing.jpg",
+    "eBay Motors": "motors.jpg",
+    "Toys & Hobbies": "toys.jpg",
+    "Home & Garden": "home.jpg",
+    "Other": "other.jpg"
+}
+
 def group_inventory_by_cat(df):
     # Your target buckets
     target_cats = [

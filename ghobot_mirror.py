@@ -109,11 +109,12 @@ def generate_ghost_mirror():
             aisle_filename = f"{safe_name}.html"
             
             # Link to the Aisle Page
+            # Hub Link Box with Fixed Height
             html_content += f"""
             <a href="{aisle_filename}" style="text-decoration: none; color: #021F00;">
-                <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; text-align: center;">
-                    <img src="{img_file}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 4px;">
-                    <h3>{cat_name}</h3>
+                <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; text-align: center; height: 250px; display: flex; flex-direction: column; justify-content: space-between; align-items: center;">
+                    <img src="{img_file}" style="width: 100%; height: 160px; object-fit: contain; border-radius: 4px;">
+                    <h3 style="font-family: 'Ultra', serif; font-size: 1.1em; margin: 10px 0 0 0;">{cat_name}</h3>
                 </div>
             </a>"""
 

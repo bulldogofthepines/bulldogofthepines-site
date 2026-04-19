@@ -98,17 +98,33 @@ def generate_ghost_mirror():
     # Build the Visual Category Grid
     html_content += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; padding: 20px;">'
         
+    # --- STEP 1: BUILD THE MAIN HUB (The Menu) ---
+    hub_html = "<h1>Shop by Category</h1>"
+    hub_html += '<div id="category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; padding: 20px;">'
+
     for cat_name, sub_df in grouped_data.items():
         if not sub_df.empty:
-            # Create a clean ID for the jump link
-            safe_id = cat_name.replace(" ", "").replace(",", "").replace("&", "")
-            # Pull the literal filename from catpro
+            # Match your GitHub image titles
             img_file = catpro.cat_images.get(cat_name, "Other.JPG")
-            # One-liner to stop the IndentationErrors for good
-            html_content += f'<a href="#{safe_id}" style="text-decoration: none; text-align: center; color: #021F00;"><div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 10px;"><img src="{img_file}" style="width: 100%; height: 80px; object-fit: cover; border-radius: 4px;"><p style="font-weight: bold; margin-top: 10px; font-size: 0.8em;">{cat_name}</p></div></a>'
+            # Create a clean filename for the aisle page
+            safe_name = cat_name.replace(" ", "_").replace(",", "").replace("&", "")
+            aisle_filename = f"{safe_name}.html"
             
-    # ... Your Category Grid Loop finishes here ...
-    html_content += '</div>'
+            # Add to the Hub Menu
+            hub_html += f"""
+            <a href="{aisle_filename}" style="text-decoration: none; color: #021F00;">
+                <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; text-align: center;">
+                    <img src="{img_file}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 4px;">
+                    <h3>{cat_name}</h3>
+                    <p>{len(sub_df)} Items Available</p>
+                </div>
+            </a>"""
+
+            # --- STEP 2: BUILD THE INDIVIDUAL AISLE PAGE ---
+            # This wipes the old file and creates the new one with current items
+            build_aisle_page(cat_name, sub_df, aisle_filename)
+
+    hub_html += '</div>'
 
     # NEXT: Open the product container (Notice the += and NO f(plus 3 quotes) template reset)
     html_content += '<div id="product-container">'

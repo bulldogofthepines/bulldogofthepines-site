@@ -95,8 +95,8 @@ def generate_ghost_mirror():
         <!-- END DELETE: Navigation & Page Title -->
         """ # <--- ADD THIS HERE TO CLOSE THE STRING
     
-        # Build the Visual Category Grid
-        html_content += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; padding: 20px;">'
+    # Build the Visual Category Grid
+    html_content += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; padding: 20px;">'
         
         for cat_name, sub_df in grouped_data.items():
             if not sub_df.empty:

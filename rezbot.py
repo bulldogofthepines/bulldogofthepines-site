@@ -9,6 +9,7 @@ def build_aisle_page(cat_name, sub_df, filename):
     aisle_html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://googleapis.com" rel="stylesheet">
     <meta charset="UTF-8">
     <title>{cat_name} | Bulldog of the Pines</title>
     <meta name="robots" content="index, follow">
@@ -22,8 +23,10 @@ def build_aisle_page(cat_name, sub_df, filename):
     </style>
 </head>
 <body>
+    <!-- The Bulldog Banner -->
+    <div class="banner" style="width: 100%; height: 300px; background-image: url('banner.jpg'); background-position: center; background-size: 100% 100%; background-repeat: no-repeat;"></div>
     <div style="padding: 20px;"><a href="inventory-mirror.html" style="color: #021F00; font-weight: bold; text-decoration: none;">← Back to All Categories</a></div>
-    <h1 style="margin-left: 20px;">{cat_name}</h1>
+    <h1 style="margin-left: 20px; color: #021F00; font-family: 'Ultra', serif; font-size: 2.5em;">{cat_name}</h1>
     <div id="product-container">"""
 
     # 2. The Product Logic (The DNA)

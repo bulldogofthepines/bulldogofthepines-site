@@ -7,6 +7,33 @@ BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 latest_csv = os.path.join(BASE_PATH, "latest_inventory.csv")
 output_html = os.path.join(BASE_PATH, "inventory-mirror.html")
 
+def build_aisle_page(cat_name, sub_df, filename):
+    # This is the "Aisle Factory" - it recreates the page from scratch every night
+    path = os.path.join(BASE_PATH, filename)
+    
+    # We use your existing product_div logic here, filtered for ONLY this category
+    aisle_html = f"""<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{cat_name} | Bulldog of the Pines</title>
+        <meta name="robots" content="index, follow">
+        <link rel="canonical" href="https://bulldogofthepines.com{filename}" />
+        <style>/* Insert your existing Bulldog CSS here */</style>
+    </head>
+    <body>
+        <h1>{cat_name}</h1>
+        <div id="product-container">"""
+
+    for index, row in sub_df.iterrows():
+        # [Insert your existing item_id / product_div logic here]
+        aisle_html += product_div
+
+    aisle_html += "</div></body></html>"
+
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(aisle_html)
+
 def generate_ghost_mirror():
     print("🔄 GhoBot is signaling ChOmpBot to start the sweep...")
     chompbot_fetch.get_full_inventory() 

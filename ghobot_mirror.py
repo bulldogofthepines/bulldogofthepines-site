@@ -109,7 +109,7 @@ def generate_ghost_mirror():
     # ... Your Category Grid Loop finishes here ...
     html_content += '</div>'
 
-    # NEXT: Open the product container (Notice the += and NO f""" template reset)
+    # NEXT: Open the product container (Notice the += and NO f""" #template reset)
     html_content += '<div id="product-container">'
 
     # START: The Item Loop

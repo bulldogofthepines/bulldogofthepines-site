@@ -100,7 +100,7 @@ def generate_ghost_mirror():
     html_content += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; padding: 20px; width: 100%; box-sizing: border-box;">'
         
     # --- STEP 1: BUILD THE MAIN HUB (The Menu) ---
-    html_content += '<div id="category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; padding: 20px;">'
+    html_content += '<div id="category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; padding: 20px; width: 100%;">'
 
     for cat_name, sub_df in grouped_data.items():
         if not sub_df.empty:

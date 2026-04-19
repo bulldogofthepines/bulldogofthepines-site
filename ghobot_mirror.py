@@ -98,102 +98,102 @@ def generate_ghost_mirror():
     # Build the Visual Category Grid
     html_content += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; padding: 20px;">'
         
-        for cat_name, sub_df in grouped_data.items():
-            if not sub_df.empty:
-                # Create a clean ID for the jump link
-                safe_id = cat_name.replace(" ", "").replace(",", "").replace("&", "")
-                # Pull the literal filename from catpro
-                img_file = catpro.cat_images.get(cat_name, "Other.JPG")
-                # One-liner to stop the IndentationErrors for good
-                html_content += f'<a href="#{safe_id}" style="text-decoration: none; text-align: center; color: #021F00;"><div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 10px;"><img src="{img_file}" style="width: 100%; height: 80px; object-fit: cover; border-radius: 4px;"><p style="font-weight: bold; margin-top: 10px; font-size: 0.8em;">{cat_name}</p></div></a>'
-                
-        # ... Your Category Grid Loop finishes here ...
-        html_content += '</div>'
-    
-        # NEXT: Open the product container (Notice the += and NO f(plus 3 quotes) template reset)
-        html_content += '<div id="product-container">'
-    
-        # START: The Item Loop
-        for cat_name, sub_df in grouped_data.items():
-            if not sub_df.empty:
-                # 1. Add the Category Header (With the ID for the Jump Link)
-                safe_id = cat_name.replace(" ", "").replace(",", "").replace("&", "")
-                # 2. Inject that ID into the header div
-                html_content += f'<div id="{safe_id}" class="category-header" style="grid-column: 1/-1; background: #021F00; color: white; padding: 15px; margin: 20px 0; border-radius: 8px; font-family: Ultra, serif;">{cat_name}</div>'
-                
-                for index, row in sub_df.iterrows():
-                    # 1. Define all data variables FIRST
-                    item_id = str(row.get('id', row.get('ItemID', 'N/A')))
-                    title = str(row.get('title', row.get('Title', 'N/A'))).replace('"', "'")
-                    image = str(row.get('image_link', row.get('Image', '')))
-                    price_clean = str(row.get('price', '0.00')).replace(' USD', '').replace('$', '').strip()
-                    human_condition = str(row.get('raw_condition', row.get('condition', 'Used')))
-                    is_new = "new" in human_condition.lower()
-                    display_condition = "New" if is_new else "Used"
-                    ebay_url = "https://www.ebay.com/itm/" + item_id
-                    schema_context = "https://schema.org/"
-                    availability_url = "https://schema.org/InStock"
-                    condition_url = f"https://schema.org/{'NewCondition' if display_condition == 'New' else 'UsedCondition'}"
-    
-                    # 2. Build the product HTML string SECOND
-                    product_div = f"""
-                    <div class="product">
-                        <script type="application/ld+json">
-                            {{
-                            "@context": "{schema_context}",
-                            "@type": "Product",
-                            "name": "{title}",
-                            "image": "{image}",
-                            "description": "{row.get('description', 'Quality Part')}",
-                            "sku": "{row.get('SKU', 'N/A')}",
-                            "offers": {{
-                                "@type": "Offer",
-                                "url": "{ebay_url}",
-                                "priceCurrency": "USD",
-                                "price": "{price_clean}",
-                                "availability": "{availability_url}",
-                                "itemCondition": "{condition_url}"
-                                }}
+    for cat_name, sub_df in grouped_data.items():
+        if not sub_df.empty:
+            # Create a clean ID for the jump link
+            safe_id = cat_name.replace(" ", "").replace(",", "").replace("&", "")
+            # Pull the literal filename from catpro
+            img_file = catpro.cat_images.get(cat_name, "Other.JPG")
+            # One-liner to stop the IndentationErrors for good
+            html_content += f'<a href="#{safe_id}" style="text-decoration: none; text-align: center; color: #021F00;"><div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 10px;"><img src="{img_file}" style="width: 100%; height: 80px; object-fit: cover; border-radius: 4px;"><p style="font-weight: bold; margin-top: 10px; font-size: 0.8em;">{cat_name}</p></div></a>'
+            
+    # ... Your Category Grid Loop finishes here ...
+    html_content += '</div>'
+
+    # NEXT: Open the product container (Notice the += and NO f(plus 3 quotes) template reset)
+    html_content += '<div id="product-container">'
+
+    # START: The Item Loop
+    for cat_name, sub_df in grouped_data.items():
+        if not sub_df.empty:
+            # 1. Add the Category Header (With the ID for the Jump Link)
+            safe_id = cat_name.replace(" ", "").replace(",", "").replace("&", "")
+            # 2. Inject that ID into the header div
+            html_content += f'<div id="{safe_id}" class="category-header" style="grid-column: 1/-1; background: #021F00; color: white; padding: 15px; margin: 20px 0; border-radius: 8px; font-family: Ultra, serif;">{cat_name}</div>'
+            
+            for index, row in sub_df.iterrows():
+                # 1. Define all data variables FIRST
+                item_id = str(row.get('id', row.get('ItemID', 'N/A')))
+                title = str(row.get('title', row.get('Title', 'N/A'))).replace('"', "'")
+                image = str(row.get('image_link', row.get('Image', '')))
+                price_clean = str(row.get('price', '0.00')).replace(' USD', '').replace('$', '').strip()
+                human_condition = str(row.get('raw_condition', row.get('condition', 'Used')))
+                is_new = "new" in human_condition.lower()
+                display_condition = "New" if is_new else "Used"
+                ebay_url = "https://www.ebay.com/itm/" + item_id
+                schema_context = "https://schema.org/"
+                availability_url = "https://schema.org/InStock"
+                condition_url = f"https://schema.org/{'NewCondition' if display_condition == 'New' else 'UsedCondition'}"
+
+                # 2. Build the product HTML string SECOND
+                product_div = f"""
+                <div class="product">
+                    <script type="application/ld+json">
+                        {{
+                        "@context": "{schema_context}",
+                        "@type": "Product",
+                        "name": "{title}",
+                        "image": "{image}",
+                        "description": "{row.get('description', 'Quality Part')}",
+                        "sku": "{row.get('SKU', 'N/A')}",
+                        "offers": {{
+                            "@type": "Offer",
+                            "url": "{ebay_url}",
+                            "priceCurrency": "USD",
+                            "price": "{price_clean}",
+                            "availability": "{availability_url}",
+                            "itemCondition": "{condition_url}"
                             }}
-                        </script>
-                        <a href="{ebay_url}" target="_blank" style="text-decoration:none; color:inherit;">
-                        <h3>{title}</h3>
-                        </a>
-                        <a href="{ebay_url}" target="_blank">
-                            <img src="{image}" alt="{title}" style="max-width: 150px;">
-                        </a>
-                        <p class="price">${price_clean}</p>
-                        <p>Condition: {human_condition}</p>
-                        <a href="{ebay_url}" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
-                    </div>"""
-    
-                    # 3. Add to the page content LAST
-                    html_content += product_div
-    
-                # --- EXIT BOTH LOOPS HERE ---
-                html_content += "</div>" # This closes the #product-container grid once.
-    
-            html_content += """ 
-            <script>
-                const urlParams = new URLSearchParams(window.location.search);
-                const itemId = urlParams.get('id');
-                if (itemId) {
-                    window.location.href = "https://www.ebay.com/itm/" + itemId;
-                }
-            </script>
+                        }}
+                    </script>
+                    <a href="{ebay_url}" target="_blank" style="text-decoration:none; color:inherit;">
+                    <h3>{title}</h3>
+                    </a>
+                    <a href="{ebay_url}" target="_blank">
+                        <img src="{image}" alt="{title}" style="max-width: 150px;">
+                    </a>
+                    <p class="price">${price_clean}</p>
+                    <p>Condition: {human_condition}</p>
+                    <a href="{ebay_url}" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
+                </div>"""
+
+                # 3. Add to the page content LAST
+                html_content += product_div
+
+            # --- EXIT BOTH LOOPS HERE ---
+            html_content += "</div>" # This closes the #product-container grid once.
+
+        html_content += """ 
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const itemId = urlParams.get('id');
+            if (itemId) {
+                window.location.href = "https://www.ebay.com/itm/" + itemId;
+            }
+        </script>
     </body>
-    </html>"""
-    
-        try:
-            if os.path.exists(output_html):
-                os.remove(output_html) 
-                
-            with open(output_html, "w", encoding="utf-8") as f:
-                f.write(html_content)
-                
-            print(f"✅ OVERWRITE SUCCESS: {output_html}")
-        except Exception as e:
-            print(f"❌ LOCK ERROR: {e}")
+</html>"""
+
+    try:
+        if os.path.exists(output_html):
+            os.remove(output_html) 
+            
+        with open(output_html, "w", encoding="utf-8") as f:
+            f.write(html_content)
+            
+        print(f"✅ OVERWRITE SUCCESS: {output_html}")
+    except Exception as e:
+        print(f"❌ LOCK ERROR: {e}")
 
 if __name__ == "__main__":
     generate_ghost_mirror()

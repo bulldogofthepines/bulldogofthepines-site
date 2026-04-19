@@ -112,7 +112,7 @@ def generate_ghost_mirror():
             html_content += f"""
             <a href="{aisle_filename}" style="text-decoration: none; color: #021F00;">
                 <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; text-align: center;">
-                    <img src="{img_file}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 4px;">
+                    <img src="{img_file}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 4px;">
                     <h3>{cat_name}</h3>
                 </div>
             </a>"""

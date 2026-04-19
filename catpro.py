@@ -1,13 +1,13 @@
 import pandas as pd
 
-# The Visual Mapping
+# The Visual Mapping in catpro.py
 cat_images = {
-    "Business & Industrial": "business.jpg",
-    "Clothing, Shoes & Accessories": "clothing.jpg",
-    "eBay Motors": "motors.jpg",
-    "Toys & Hobbies": "toys.jpg",
-    "Home & Garden": "home.jpg",
-    "Other": "other.jpg"
+    "Business & Industrial": "Industrial.JPG",
+    "Clothing, Shoes & Accessories": "Clothing.jpg",
+    "eBay Motors": "Auto_Parts.JPG",
+    "Toys & Hobbies": "Toys_Hobbies.jpg",
+    "Home & Garden": "Home_Garden.jpg",
+    "Other": "Other.JPG"
 }
 
 def group_inventory_by_cat(df):

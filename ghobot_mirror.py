@@ -92,12 +92,12 @@ def generate_ghost_mirror():
             <a href="index.html" style="color: #021F00; text-decoration: none; font-weight: bold; font-size: 0.9em;">← Back to Home</a>
         </div>
     
-        <h1>Available Items <span class="update-tag">(updates daily)</span></h1>
+        <h1> Shop By Category <span class="update-tag">(updates daily)</span></h1>
         <!-- END DELETE: Navigation & Page Title -->
         """ # <--- ADD THIS HERE TO CLOSE THE STRING
     
     # Build the Visual Category Grid
-    html_content += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; padding: 20px;">'
+    html_content += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; padding: 20px; width: 100%; box-sizing: border-box;">'
         
     # --- STEP 1: BUILD THE MAIN HUB (The Menu) ---
     html_content += "<h1>Shop by Category</h1>"

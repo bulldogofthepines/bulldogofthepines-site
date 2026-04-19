@@ -105,12 +105,12 @@ def generate_ghost_mirror():
             img_file = catpro.cat_images.get(cat_name, "Other.JPG")
             
             html_content += f"""
-            <a href="#{safe_id}" style="text-decoration: none; text-align: center; color: #021F00;">
-                <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 10px;">
-                    <img src="{img_file}" style="width: 100%; height: 80px; object-fit: cover; border-radius: 4px;">
-                    <p style="font-weight: bold; margin-top: 10px; font-size: 0.8em;">{cat_name}</p>
-                </div>
-            </a>"""
+        <a href="#{safe_id}" style="text-decoration: none; text-align: center; color: #021F00;">
+            <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 10px;">
+                <img src="{img_file}" style="width: 100%; height: 80px; object-fit: cover; border-radius: 4px;">
+                <p style="font-weight: bold; margin-top: 10px; font-size: 0.8em;">{cat_name}</p>
+            </div>
+        </a>"""
     # ... Your Category Grid Loop finishes here ...
     html_content += '</div>'
 

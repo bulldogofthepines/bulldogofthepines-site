@@ -118,7 +118,7 @@ def get_full_inventory():
             search_data.append({
                 "t": item['title'],
                 "i": item['image_link'],
-                "u": f"https://ebay.com{item['id']}"
+                "u": f"https://ebay.com/itm/{item['id']}"
             })
 
         with open(os.path.join(BASE_PATH, "search_index.json"), "w", encoding="utf-8") as f:

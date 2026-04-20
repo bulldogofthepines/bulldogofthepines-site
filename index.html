@@ -138,54 +138,75 @@
     <!-- DROP SCRIPT HERE -->
     <script>
         let inventory = [];
-        fetch('search_index.json').then(r => r.json()).then(data => inventory = data).catch(e => console.log("Search index not found. Run ChOmpBot!"));
-
+        let selectedIndex = -1; // Track which item is highlighted
+    
+        fetch('search_index.json').then(r => r.json()).then(data => inventory = data).catch(e => console.log("Search index not found."));
+    
         const searchInput = document.getElementById('masterSearch');
         const resultsDiv = document.getElementById('searchResults');
-
+    
         searchInput.addEventListener('input', function(e) {
             let term = e.target.value.toLowerCase().trim();
             resultsDiv.innerHTML = '';
+            selectedIndex = -1; // Reset selection on new search
+            
             if (term.length < 2) { resultsDiv.style.display = 'none'; return; }
-
+    
             let matches = inventory.filter(item => item.t.toLowerCase().includes(term)).slice(0, 10);
+            
             if (matches.length > 0) {
                 resultsDiv.style.display = 'block';
-                matches.forEach(item => {
+                matches.forEach((item, index) => {
                     let div = document.createElement('div');
+                    div.id = 'result-' + index;
+                    div.className = 'result-item'; // For easier targeting
                     div.style = "display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; transition: background 0.2s;";
-                    div.onmouseover = () => div.style.background = "#f9f9f9";
-                    div.onmouseout = () => div.style.background = "white";
                     div.innerHTML = `<img src="${item.i}" style="width: 45px; height: 45px; margin-right: 12px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd;">
                                      <div style="font-size: 13px; color: #333; line-height: 1.2; text-align: left;">${item.t}</div>`;
                     div.onclick = () => window.open(item.u, '_blank');
                     resultsDiv.appendChild(div);
                 });
             } else {
-                // THE "LOUD" OVERRIDE:
-                resultsDiv.innerHTML = `<div style="padding: 15px; font-size: 13px; color: #888; font-style: italic; text-align: center; background: white; border-radius: 0 0 15px 15px;">No products matching your request...</div>`;
+                resultsDiv.innerHTML = `<div style="padding: 15px; font-size: 13px; color: #888; font-style: italic; text-align: center; background: white;">No products matching your request...</div>`;
                 resultsDiv.style.display = 'block';
             }
         });
-
-        // Listen for the Enter key to fire the top result
+    
         searchInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                let term = e.target.value.toLowerCase().trim();
-                let matches = inventory.filter(item => item.t.toLowerCase().includes(term));
-                if (matches.length > 0) {
-                    window.open(matches[0].u, '_blank'); // Opens the first [0] match
-                    searchInput.value = ''; // Clears the box
-                    resultsDiv.style.display = 'none'; // Hides the dropdown
+            let items = resultsDiv.getElementsByClassName('result-item');
+            
+            if (e.key === 'ArrowDown') {
+                selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
+                updateHighlight(items);
+                e.preventDefault(); // Stop cursor from moving in text box
+            } else if (e.key === 'ArrowUp') {
+                selectedIndex = Math.max(selectedIndex - 1, -1);
+                updateHighlight(items);
+                e.preventDefault();
+            } else if (e.key === 'Enter') {
+                if (selectedIndex > -1 && items[selectedIndex]) {
+                    items[selectedIndex].click(); // Fire the click on the highlighted item
+                } else {
+                    // If nothing highlighted, fire the absolute first match (old behavior)
+                    let term = e.target.value.toLowerCase().trim();
+                    let matches = inventory.filter(item => item.t.toLowerCase().includes(term));
+                    if (matches.length > 0) window.open(matches[0].u, '_blank');
                 }
+                searchInput.value = '';
+                resultsDiv.style.display = 'none';
             }
         });
-
-        // Modified click-away logic to clear the text box too
+    
+        function updateHighlight(items) {
+            for (let i = 0; i < items.length; i++) {
+                items[i].style.background = (i === selectedIndex) ? "#e9ecef" : "white";
+            }
+        }
+    
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.search-wrapper')) {
                 resultsDiv.style.display = 'none';
-                searchInput.value = ''; // Wipes the "tractor" sticky text
+                searchInput.value = '';
             }
         });
     </script>

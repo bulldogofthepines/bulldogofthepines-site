@@ -107,9 +107,19 @@ def get_full_inventory():
         df_master.to_csv(os.path.join(BACKUP_FOLDER, f"bulldog_inventory_{STAMP}.csv"), index=False)
         df_master.to_csv(os.path.join(BASE_PATH, "latest_inventory.csv"), index=False)
         
-        # GMC specific upload file (only needs the bot-friendly 'condition' column)
+        # 1. Force the description column to exist and pull from the master data
+        if 'description' not in df_master.columns:
+            # Fallback: Build it from Title if it's missing for some reason
+            df_master['description'] = "Quality part from Bulldog of the Pines. " + df_master['title']
+    
+        # 2. Re-map the GMC specific upload file
         google_cols = ['id', 'title', 'description', 'link', 'image_link', 'price', 'availability', 'condition']
-        df_google = df_master[google_cols]
+        df_google = df_master[google_cols].copy()
+    
+        # 3. Save the static feed file for the GMC URL
+        df_google.to_csv(os.path.join(BASE_PATH, "gmc_feed.csv"), index=False)
+        
+        # 4. Keep your backup
         df_google.to_csv(os.path.join(BACKUP_FOLDER, f"GMC_Upload_{STAMP}.csv"), index=False)
 
         # Build the lightweight Search Index for the Dropdown UI

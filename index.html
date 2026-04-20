@@ -166,8 +166,25 @@
             }
         });
 
+        // Listen for the Enter key to fire the top result
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                let term = e.target.value.toLowerCase().trim();
+                let matches = inventory.filter(item => item.t.toLowerCase().includes(term));
+                if (matches.length > 0) {
+                    window.open(matches[0].u, '_blank'); // Opens the first [0] match
+                    searchInput.value = ''; // Clears the box
+                    resultsDiv.style.display = 'none'; // Hides the dropdown
+                }
+            }
+        });
+
+        // Modified click-away logic to clear the text box too
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.search-wrapper')) resultsDiv.style.display = 'none';
+            if (!e.target.closest('.search-wrapper')) {
+                resultsDiv.style.display = 'none';
+                searchInput.value = ''; // Wipes the "tractor" sticky text
+            }
         });
     </script>
     

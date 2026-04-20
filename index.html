@@ -87,7 +87,12 @@
 
     .tagline { font-style: italic; color: #666; margin-bottom: 25px; }
     .footer { font-size: 0.9em; padding: 20px; color: #888; }
-    a { color: #0053a0; text-decoration: none; }   
+    a { color: #0053a0; text-decoration: none; }  
+
+    /* LIVE SEARCH STYLING */
+        .search-wrapper { position: relative; max-width: 500px; margin: 20px auto; text-align: left; }
+        #masterSearch { width: 100%; padding: 12px 20px; border-radius: 25px; border: 2px solid #021F00; outline: none; font-size: 16px; box-sizing: border-box; }
+        #searchResults { position: absolute; width: 100%; background: white; z-index: 1000; border-radius: 0 0 15px 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.15); max-height: 350px; overflow-y: auto; display: none; border: 1px solid #ddd; border-top: none; }
 </style>
 </head>
 <body>
@@ -95,6 +100,12 @@
     <div class="container">
         <h1>BullDog Of The Pines</h1>
         <p class="tagline">Industrial, Automotive, Tools, & Clothing</p>
+
+        <!-- THE LIVE SEARCH BAR -->
+        <div class="search-wrapper">
+            <input type="text" id="masterSearch" placeholder="Search 500+ items instantly...">
+            <div id="searchResults"></div>
+        </div>
         
         <!-- Trust Bar -->
         <div style="display: flex; justify-content: space-around; margin: 20px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 15px 0; font-size: 0.9em; font-weight: bold; color: #555;">
@@ -123,5 +134,42 @@
         <p>&copy; 2026 BullDog Of The Pines, LLC. All Rights Reserved.</p>
         <p><a href="returns.html">Shipping & Returns Policy</a></p>
     </div>
+
+    <!-- DROP SCRIPT HERE -->
+    <script>
+        let inventory = [];
+        fetch('search_index.json').then(r => r.json()).then(data => inventory = data).catch(e => console.log("Search index not found. Run ChOmpBot!"));
+
+        const searchInput = document.getElementById('masterSearch');
+        const resultsDiv = document.getElementById('searchResults');
+
+        searchInput.addEventListener('input', function(e) {
+            let term = e.target.value.toLowerCase().trim();
+            resultsDiv.innerHTML = '';
+            if (term.length < 2) { resultsDiv.style.display = 'none'; return; }
+
+            let matches = inventory.filter(item => item.t.toLowerCase().includes(term)).slice(0, 10);
+            if (matches.length > 0) {
+                resultsDiv.style.display = 'block';
+                matches.forEach(item => {
+                    let div = document.createElement('div');
+                    div.style = "display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; transition: background 0.2s;";
+                    div.onmouseover = () => div.style.background = "#f9f9f9";
+                    div.onmouseout = () => div.style.background = "white";
+                    div.innerHTML = `<img src="${item.i}" style="width: 45px; height: 45px; margin-right: 12px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd;">
+                                     <div style="font-size: 13px; color: #333; line-height: 1.2; text-align: left;">${item.t}</div>`;
+                    div.onclick = () => window.open(item.u, '_blank');
+                    resultsDiv.appendChild(div);
+                });
+            } else {
+                resultsDiv.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-wrapper')) resultsDiv.style.display = 'none';
+        });
+    </script>
+    
 </body>
 </html>

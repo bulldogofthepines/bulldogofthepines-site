@@ -143,8 +143,14 @@ def generate_ghost_mirror():
         <script>
             let inventory = [];
             let selectedIndex = -1;
-            fetch('search_index.json').then(r => r.json()).then(data => inventory = data);
-    
+            fetch('search_index.json')
+                .then(r => r.json())
+                .then(data => { 
+                    inventory = data;
+                    // DYNAMIC UPDATE:
+                    document.getElementById('masterSearch').placeholder = `Search ${inventory.length} items instantly...`;
+                });
+            
             const searchInput = document.getElementById('masterSearch');
             const resultsDiv = document.getElementById('searchResults');
     

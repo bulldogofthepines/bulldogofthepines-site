@@ -162,7 +162,9 @@
                     resultsDiv.appendChild(div);
                 });
             } else {
-                resultsDiv.style.display = 'none';
+                // THE NEW FEEDBACK LINE:
+                resultsDiv.style.display = 'block';
+                resultsDiv.innerHTML = `<div style="padding: 15px; font-size: 13px; color: #888; font-style: italic; text-align: center;">No products matching your request...</div>`;
             }
         });
 

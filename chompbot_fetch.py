@@ -7,6 +7,7 @@ import bdotpschema as schema
 import condrules as rules
 import bomoseo as seo
 import os
+import json
 from datetime import datetime
 
 # 1. Setup the Home Base (OneDrive Desktop)
@@ -110,6 +111,18 @@ def get_full_inventory():
         google_cols = ['id', 'title', 'description', 'link', 'image_link', 'price', 'availability', 'condition']
         df_google = df_master[google_cols]
         df_google.to_csv(os.path.join(BACKUP_FOLDER, f"GMC_Upload_{STAMP}.csv"), index=False)
+
+        # Build the lightweight Search Index for the Dropdown UI
+        search_data = []
+        for item in all_items:
+            search_data.append({
+                "t": item['title'],
+                "i": item['image_link'],
+                "u": f"https://ebay.com{item['id']}"
+            })
+
+        with open(os.path.join(BASE_PATH, "search_index.json"), "w", encoding="utf-8") as f:
+            json.dump(search_data, f)
         
         print(f"✅ MISSION COMPLETE! Files in: {BASE_PATH}")
     else:

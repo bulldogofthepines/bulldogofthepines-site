@@ -95,6 +95,14 @@ def generate_ghost_mirror():
         <h1> Shop By Category <span class="update-tag">(updates daily)</span></h1>
         <!-- END DELETE: Navigation & Page Title -->
         """ # <--- ADD THIS HERE TO CLOSE THE STRING
+
+    # Category Finder Search Bar
+    html_content += """
+    <div style="padding: 0 20px; margin-bottom: 10px;">
+        <input type="text" id="catSearch" onkeyup="filterCategories()" placeholder="Search categories..." 
+        style="width: 100%; max-width: 400px; padding: 12px; border: 2px solid #021F00; border-radius: 8px; font-size: 1.1em; outline: none;">
+    </div>
+    """
     
     # Build the Visual Category Grid
     html_content += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; padding: 20px; width: 100%; box-sizing: border-box;">'
@@ -126,7 +134,21 @@ def generate_ghost_mirror():
 
     # Close the Hub Menu Grid and the Page
     html_content += """
+    
     </div>
+
+    <script>
+    function filterCategories() {
+        let input = document.getElementById('catSearch').value.toLowerCase();
+        let cards = document.querySelectorAll('#category-grid a');
+        
+        cards.forEach(card => {
+            let catName = card.querySelector('h3').innerText.toLowerCase();
+            card.style.display = catName.includes(input) ? "" : "none";
+        });
+    }
+    </script>
+    
     </body>
     </html>"""
 

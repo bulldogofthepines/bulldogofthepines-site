@@ -34,6 +34,16 @@ def generate_ghost_mirror():
         <link href="https://googleapis.com/css2?family=Ultra&display=swap" rel="stylesheet">
         <link rel="canonical" href="https://bulldogofthepines.com/inventory-mirror.html" />
         <!-- END DELETE: Font & Canonical Section -->
+
+        <!-- THE MAGIC BEANS: ItemList Schema -->
+        <script type="application/ld+json">
+        {{
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "name": "Bulldog of the Pines Inventory Categories",
+          "description": "Shop by category for industrial, automotive, tools, and clothing."
+        }}
+        </script>
     
         <style>
             body {{ font-family: sans-serif; background: #f4f4f4; color: #333; margin: 0; padding: 0; }}

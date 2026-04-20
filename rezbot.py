@@ -72,17 +72,41 @@ def build_aisle_page(cat_name, sub_df, filename):
         human_condition = str(row.get('raw_condition', row.get('condition', 'Used')))
         ebay_url = "https://ebay.com/itm/" + item_id
 
+        # Inside the product loop in rezbot.py
+        gmc_condition = str(row.get('condition', 'used')).lower() # Bot-friendly version
+        gmc_availability = "https://schema.org/InStock"
+        
         aisle_html += f"""
         <div class="product">
+            <script type="application/ld+json">
+            {{
+              "@context": "https://schema.org/",
+              "@type": "Product",
+              "name": "{title}",
+              "image": "{image}",
+              "description": "Quality part from Bulldog of the Pines.",
+              "sku": "{item_id}",
+              "brand": {{
+                "@type": "Brand",
+                "name": "Bulldog of the Pines"
+              }},
+              "offers": {{
+                "@type": "Offer",
+                "url": "{ebay_url}",
+                "priceCurrency": "USD",
+                "price": "{price_clean}",
+                "availability": "{gmc_availability}",
+                "itemCondition": "https://schema.org/{'NewCondition' if gmc_condition == 'new' else 'UsedCondition'}"
+              }}
+            }}
+            </script>
+            
             <a href="{ebay_url}" target="_blank" style="text-decoration:none; color:inherit;">
                 <h3>{title}</h3>
             </a>
-            
-            <!-- THE FIX: Wrap the image in the eBay link -->
             <a href="{ebay_url}" target="_blank">
                 <img src="{image}" alt="{title}" style="max-width: 150px;">
             </a>
-            
             <p class="price">${price_clean}</p>
             <p>Condition: {human_condition}</p>
             <a href="{ebay_url}" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>

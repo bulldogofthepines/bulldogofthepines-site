@@ -59,6 +59,11 @@
                 h1 { font-size: 1.8em; letter-spacing: -1px; }
                 .banner { height: 35vw; }
             }
+
+            .search-wrapper { position: relative; max-width: 600px; margin: 20px; text-align: left; }
+            #masterSearch { width: 100%; padding: 14px 20px; border-radius: 30px; border: 2.5px solid #021F00; font-size: 16px; outline: none; }
+            #searchResults { position: absolute; width: 100%; background: white; z-index: 1000; border-radius: 0 0 15px 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.15); max-height: 400px; overflow-y: auto; display: none; border: 1px solid #ddd; border-top: none; }
+            
         </style>
     </head>
     <body>
@@ -68,15 +73,16 @@
         <div style="margin: 20px 0 0 20px;">
             <a href="index.html" style="color: #021F00; text-decoration: none; font-weight: bold; font-size: 0.9em;">← Back to Home</a>
         </div>
+
+        <!-- THE MASTER PRODUCT SEARCH -->
+        <div class="search-wrapper">
+            <input type="text" id="masterSearch" placeholder="Search 500+ items instantly...">
+            <div id="searchResults"></div>
+        </div>
     
         <h1> Shop By Category <span class="update-tag">(updates daily)</span></h1>
         <!-- END DELETE: Navigation & Page Title -->
-        
-    <div style="padding: 0 20px; margin-bottom: 10px;">
-        <input type="text" id="catSearch" onkeyup="filterCategories()" placeholder="Search categories..." 
-        style="width: 100%; max-width: 400px; padding: 12px; border: 2px solid #021F00; border-radius: 8px; font-size: 1.1em; outline: none;">
-    </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; padding: 20px; width: 100%; box-sizing: border-box;"><div id="category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; padding: 20px; width: 100%;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; padding: 20px; width: 100%; box-sizing: border-box;"><div id="category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; padding: 20px; width: 100%;">
             <a href="Business__Industrial.html" style="text-decoration: none; color: #021F00;">
                 <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; text-align: center; height: 250px; display: flex; flex-direction: column; justify-content: space-between; align-items: center;">
                     <img src="Industrial.JPG" style="width: 100%; height: 160px; object-fit: contain; border-radius: 4px;">
@@ -116,17 +122,59 @@
     
     </div>
 
-    <script>
-    function filterCategories() {
-        let input = document.getElementById('catSearch').value.toLowerCase();
-        let cards = document.querySelectorAll('#category-grid a');
-        
-        cards.forEach(card => {
-            let catName = card.querySelector('h3').innerText.toLowerCase();
-            card.style.display = catName.includes(input) ? "" : "none";
-        });
-    }
-    </script>
+        <script>
+            let inventory = [];
+            let selectedIndex = -1;
+            fetch('search_index.json').then(r => r.json()).then(data => inventory = data);
+    
+            const searchInput = document.getElementById('masterSearch');
+            const resultsDiv = document.getElementById('searchResults');
+    
+            searchInput.addEventListener('input', function(e) {
+                let term = e.target.value.toLowerCase().trim();
+                resultsDiv.innerHTML = '';
+                selectedIndex = -1;
+                if (term.length < 2) { resultsDiv.style.display = 'none'; return; }
+                let matches = inventory.filter(item => item.t.toLowerCase().includes(term)).slice(0, 10);
+                if (matches.length > 0) {
+                    resultsDiv.style.display = 'block';
+                    matches.forEach((item, index) => {
+                        let div = document.createElement('div');
+                        div.className = 'result-item';
+                        div.style = "display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #eee; cursor: pointer;";
+                        div.innerHTML = `<img src="${item.i}" style="width: 40px; height: 40px; margin-right: 12px; object-fit: cover; border-radius: 4px;"> <div style="font-size: 13px; color: #333;">${item.t}</div>`;
+                        div.onclick = () => window.open(item.u, '_blank');
+                        resultsDiv.appendChild(div);
+                    });
+                } else {
+                    resultsDiv.innerHTML = `<div style="padding: 15px; font-size: 13px; color: #888; font-style: italic; text-align: center; background: white;">No products matching...</div>`;
+                    resultsDiv.style.display = 'block';
+                }
+            });
+    
+            searchInput.addEventListener('keydown', function(e) {
+                let items = resultsDiv.getElementsByClassName('result-item');
+                if (e.key === 'ArrowDown') { e.preventDefault(); selectedIndex = Math.min(selectedIndex + 1, items.length - 1); updateHighlight(items); }
+                else if (e.key === 'ArrowUp') { e.preventDefault(); selectedIndex = Math.max(selectedIndex - 1, -1); updateHighlight(items); }
+                else if (e.key === 'Enter') {
+                    if (selectedIndex > -1 && items[selectedIndex]) { items[selectedIndex].click(); }
+                    else {
+                        let term = e.target.value.toLowerCase().trim();
+                        let matches = inventory.filter(item => item.t.toLowerCase().includes(term));
+                        if (matches.length > 0) window.open(matches[0].u, '_blank');
+                    }
+                    searchInput.value = ''; resultsDiv.style.display = 'none';
+                }
+            });
+    
+            function updateHighlight(items) {
+                for (let i = 0; i < items.length; i++) {
+                    items[i].style.background = (i === selectedIndex) ? "#e9ecef" : "white";
+                    if (i === selectedIndex) items[i].scrollIntoView({ block: 'nearest' });
+                }
+            }
+            document.addEventListener('click', (e) => { if (!e.target.closest('.search-wrapper')) { resultsDiv.style.display = 'none'; searchInput.value = ''; } });
+        </script>
     
     </body>
     </html>

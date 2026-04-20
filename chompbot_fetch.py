@@ -81,7 +81,7 @@ def get_full_inventory():
                     'id': item_id,
                     'title': clean_title,
                     'CategoryName': category_name,  # <--- ADD THIS LINE for Cats
-                    'description': f"Quality part from Bulldog of the Pines. eBay Condition: {raw_ebay_condition}",
+                    'description': f"Quality part from Bulldog of the Pines: {clean_title}. eBay Condition: {raw_ebay_condition}",
                     'link': f"https://bulldogofthepines.com{item_id}",
                     'image_link': item.findtext(schema.COLUMNS['Image'], default="https://bulldogofthepines.com", namespaces=namespace),
                     'price': f"{item.findtext(schema.COLUMNS['Price'], namespaces=namespace)} USD",

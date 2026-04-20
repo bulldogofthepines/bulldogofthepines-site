@@ -176,18 +176,20 @@
             let items = resultsDiv.getElementsByClassName('result-item');
             
             if (e.key === 'ArrowDown') {
+                e.preventDefault(); // STOP cursor movement in the search bar
                 selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
                 updateHighlight(items);
-                e.preventDefault(); // Stop cursor from moving in text box
-            } else if (e.key === 'ArrowUp') {
+            } 
+            else if (e.key === 'ArrowUp') {
+                e.preventDefault(); // STOP cursor movement in the search bar
                 selectedIndex = Math.max(selectedIndex - 1, -1);
                 updateHighlight(items);
-                e.preventDefault();
-            } else if (e.key === 'Enter') {
+            } 
+            else if (e.key === 'Enter') {
                 if (selectedIndex > -1 && items[selectedIndex]) {
                     items[selectedIndex].click(); // Fire the click on the highlighted item
                 } else {
-                    // If nothing highlighted, fire the absolute first match (old behavior)
+                    // Absolute fallback: fire the first match
                     let term = e.target.value.toLowerCase().trim();
                     let matches = inventory.filter(item => item.t.toLowerCase().includes(term));
                     if (matches.length > 0) window.open(matches[0].u, '_blank');
@@ -199,7 +201,13 @@
     
         function updateHighlight(items) {
             for (let i = 0; i < items.length; i++) {
-                items[i].style.background = (i === selectedIndex) ? "#e9ecef" : "white";
+                if (i === selectedIndex) {
+                    items[i].style.background = "#e9ecef";
+                    // Keep the highlighted item visible in a long list
+                    items[i].scrollIntoView({ block: 'nearest' });
+                } else {
+                    items[i].style.background = "white";
+                }
             }
         }
     

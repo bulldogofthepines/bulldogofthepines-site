@@ -74,7 +74,7 @@ def build_aisle_page(cat_name, sub_df, filename):
       "@type": "Product",
       "name": "{title}",
       "image": "{image}",
-      "description": "Quality part from Bulldog of the Pines.",
+      "description": "Quality item from Bulldog of the Pines.",
       "sku": "{item_id}",
       "brand": {{ "@type": "Brand", "name": "Bulldog of the Pines" }},
       "offers": {{

@@ -61,6 +61,10 @@ def build_aisle_page(cat_name, sub_df, filename):
         gmc_availability = "https://schema.org/InStock"
 
         # --- THE PERMANENT FLOOR SIDE MISSION ---
+
+        # 1. ADD THIS LINE: Build the identical twin string to match ChOmpBot
+        full_desc = f"Quality item from Bulldog of the Pines: {title}. eBay Condition: {human_condition}"
+        
         # Generate a tiny static landing page for Google (and direct user redirect)
         item_page_html = f"""<!DOCTYPE html>
 <html>

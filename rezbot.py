@@ -89,11 +89,11 @@ def build_aisle_page(cat_name, sub_df, filename):
       "brand": {{ "@type": "Brand", "name": "Bulldog of the Pines" }},
       "offers": {{
         "@type": "Offer",
-        "url": "https://ebay.com/itm/{item_id}",
+        "url": f"https://bulldogofthepines.com/items/{item_id}.html",
         "priceCurrency": "USD",
         "price": "{price_clean}",
         "availability": "https://schema.org/InStock",
-        "itemCondition": "https://schema.org/{'NewCondition' if gmc_condition == 'new' else 'UsedCondition'}""
+        "itemCondition": "https://schema.org/{'NewCondition' if gmc_condition == 'new' else 'UsedCondition'}"
       }}
     }}
     </script>

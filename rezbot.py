@@ -5,7 +5,12 @@ BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 def build_aisle_page(cat_name, sub_df, filename):
     path = os.path.join(BASE_PATH, filename)
     
-    # 1. The Aisle Header
+    # NEW: Create the drawer for individual item pages to keep the repo clean
+    items_dir = os.path.join(BASE_PATH, 'items')
+    if not os.path.exists(items_dir):
+        os.makedirs(items_dir)
+
+    # 1. The Aisle Header (Remains the same)
     aisle_html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,87 +25,80 @@ def build_aisle_page(cat_name, sub_df, filename):
         .product {{ background: white; border: 1px solid #ddd; padding: 20px; border-radius: 8px; text-align: center; }}
         img {{ max-width: 100%; height: auto; border-radius: 4px; margin: 10px 0; }}
         .price {{ font-weight: bold; color: #b12704; font-size: 1.2rem; }}
-
-        /* Search Bar Styling */
         .search-wrapper {{ padding: 0 20px; margin-top: 20px; }}
-        #searchInput {{ 
-            width: 100%; 
-            max-width: 500px; 
-            padding: 12px; 
-            border-radius: 25px; 
-            border: 2px solid #021F00; 
-            font-size: 16px;
-            outline: none;
-        }}
+        #searchInput {{ width: 100%; max-width: 500px; padding: 12px; border-radius: 25px; border: 2px solid #021F00; font-size: 16px; outline: none; }}
     </style>
-
-    <!-- Search Bar Script -->
     <script>
         function filterProducts() {{
             let input = document.getElementById('searchInput').value.toLowerCase();
             let products = document.getElementsByClassName('product');
-            
             for (let i = 0; i < products.length; i++) {{
                 let title = products[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
-                if (title.includes(input)) {{
-                    products[i].style.display = "";
-                }} else {{
-                    products[i].style.display = "none";
-                }}
+                if (title.includes(input)) {{ products[i].style.display = ""; }}
+                else {{ products[i].style.display = "none"; }}
             }}
         }}
     </script>
-    
 </head>
 <body>
-    <!-- The Bulldog Banner -->
     <div class="banner" style="width: 100%; height: 300px; background-image: url('banner.jpg'); background-position: center; background-size: 100% 100%; background-repeat: no-repeat;"></div>
     <div style="padding: 20px;"><a href="inventory-mirror.html" style="color: #021F00; font-weight: bold; text-decoration: none;">← Back to All Categories</a></div>
-    <!-- THE MISSING PIECE: The actual box for people to type in -->
     <div class="search-wrapper">
         <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Search {cat_name}...">
     </div>
     <h1 style="margin-left: 20px; color: #021F00; font-family: 'Ultra', serif; font-size: 2.5em;">{cat_name}</h1>
     <div id="product-container">"""
 
-    # 2. The Product Logic (The DNA)
+    # 2. The Product Logic
     for index, row in sub_df.iterrows():
         item_id = str(row.get('id', row.get('ItemID', 'N/A')))
         title = str(row.get('title', row.get('Title', 'N/A'))).replace('"', "'")
         image = str(row.get('image_link', row.get('Image', '')))
         price_clean = str(row.get('price', '0.00')).replace(' USD', '').replace('$', '').strip()
         human_condition = str(row.get('raw_condition', row.get('condition', 'Used')))
-        ebay_url = "https://ebay.com/itm/" + item_id
-
-        # Inside the product loop in rezbot.py
-        gmc_condition = str(row.get('condition', 'used')).lower() # Bot-friendly version
+        ebay_url = "https://www.ebay.com/itm/" + item_id
+        gmc_condition = str(row.get('condition', 'used')).lower()
         gmc_availability = "https://schema.org/InStock"
+
+        # --- THE PERMANENT FLOOR SIDE MISSION ---
+        # Generate a tiny static landing page for Google (and direct user redirect)
+        item_page_html = f"""<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{title}</title>
+    <meta http-equiv="refresh" content="0; url={ebay_url}">
+    <script type="application/ld+json">
+    {{
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "{title}",
+      "image": "{image}",
+      "description": "Quality part from Bulldog of the Pines.",
+      "sku": "{item_id}",
+      "brand": {{ "@type": "Brand", "name": "Bulldog of the Pines" }},
+      "offers": {{
+        "@type": "Offer",
+        "url": "{ebay_url}",
+        "priceCurrency": "USD",
+        "price": "{price_clean}",
+        "availability": "https://schema.org/InStock",
+        "itemCondition": "https://schema.org/{'NewCondition' if gmc_condition == 'new' else 'UsedCondition'}"
+      }}
+    }}
+    </script>
+</head>
+<body>Redirecting to eBay... <a href="{ebay_url}">Click here</a></body>
+</html>"""
         
+        # Write the tiny file to /items/[item_id].html
+        with open(os.path.join(items_dir, f"{item_id}.html"), "w", encoding="utf-8") as f:
+            f.write(item_page_html)
+        # --- END SIDE MISSION ---
+
+        # The Aisle Display (Keep your original grid layout)
         aisle_html += f"""
         <div class="product">
-            <script type="application/ld+json">
-            {{
-              "@context": "https://schema.org/",
-              "@type": "Product",
-              "name": "{title}",
-              "image": "{image}",
-              "description": "Quality part from Bulldog of the Pines.",
-              "sku": "{item_id}",
-              "brand": {{
-                "@type": "Brand",
-                "name": "Bulldog of the Pines"
-              }},
-              "offers": {{
-                "@type": "Offer",
-                "url": "{ebay_url}",
-                "priceCurrency": "USD",
-                "price": "{price_clean}",
-                "availability": "{gmc_availability}",
-                "itemCondition": "https://schema.org/{'NewCondition' if gmc_condition == 'new' else 'UsedCondition'}"
-              }}
-            }}
-            </script>
-            
             <a href="{ebay_url}" target="_blank" style="text-decoration:none; color:inherit;">
                 <h3>{title}</h3>
             </a>
@@ -114,6 +112,5 @@ def build_aisle_page(cat_name, sub_df, filename):
 
     aisle_html += "</div></body></html>"
 
-    # 3. The Resurrection (Overwrite the old file)
     with open(path, "w", encoding="utf-8") as f:
         f.write(aisle_html)

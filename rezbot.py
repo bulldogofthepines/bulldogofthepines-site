@@ -50,15 +50,16 @@ def build_aisle_page(cat_name, sub_df, filename):
     <div id="product-container">"""
 
     # 2. The Product Logic
+    # Inside the rezbot.py product loop:
     for index, row in sub_df.iterrows():
-        item_id = str(row.get('id', row.get('ItemID', 'N/A')))
-        title = str(row.get('title', row.get('Title', 'N/A'))).replace('"', "'")
-        image = str(row.get('image_link', row.get('Image', '')))
-        price_clean = str(row.get('price', '0.00')).replace(' USD', '').replace('$', '').strip()
-        human_condition = str(row.get('raw_condition', row.get('condition', 'Used')))
-        ebay_url = "https://www.ebay.com/itm/" + item_id
+        # 1. Capture the EXACT data GMC sees
+        item_id = str(row.get('id', ''))
+        title = str(row.get('title', '')).replace('"', "'")
+        # Use the FULL description you already built in ChOmpBot
+        full_desc = str(row.get('description', '')).replace('"', "'")
+        image = str(row.get('image_link', ''))
+        price_val = str(row.get('price', '')).replace(' USD', '').replace('$', '').strip()
         gmc_condition = str(row.get('condition', 'used')).lower()
-        gmc_availability = "https://schema.org/InStock"
 
         # --- THE PERMANENT FLOOR SIDE MISSION ---
 
@@ -71,23 +72,23 @@ def build_aisle_page(cat_name, sub_df, filename):
 <head>
     <meta charset="UTF-8">
     <title>{title}</title>
-    <meta http-equiv="refresh" content="0; url={ebay_url}">
+    <meta http-equiv="refresh" content="0; url=https://ebay.com/{item_id}">
     <script type="application/ld+json">
     {{
       "@context": "https://schema.org/",
       "@type": "Product",
       "name": "{title}",
       "image": "{image}",
-      "description": "Quality item from Bulldog of the Pines.",
+      "description": "{full_desc}",
       "sku": "{item_id}",
       "brand": {{ "@type": "Brand", "name": "Bulldog of the Pines" }},
       "offers": {{
         "@type": "Offer",
-        "url": "{ebay_url}",
+        "url": "https://ebay.com/{item_id}",
         "priceCurrency": "USD",
-        "price": "{price_clean}",
+        "price": "{price_val}",
         "availability": "https://schema.org/InStock",
-        "itemCondition": "https://schema.org/{'NewCondition' if gmc_condition == 'new' else 'UsedCondition'}"
+        "itemCondition": "https://schema.org/{'NewCondition' if gmc_condition == 'new' else 'UsedCondition'}""
       }}
     }}
     </script>

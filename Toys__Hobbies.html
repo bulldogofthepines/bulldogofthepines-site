@@ -12,453 +12,158 @@
         .product { background: white; border: 1px solid #ddd; padding: 20px; border-radius: 8px; text-align: center; }
         img { max-width: 100%; height: auto; border-radius: 4px; margin: 10px 0; }
         .price { font-weight: bold; color: #b12704; font-size: 1.2rem; }
-
-        /* Search Bar Styling */
         .search-wrapper { padding: 0 20px; margin-top: 20px; }
-        #searchInput { 
-            width: 100%; 
-            max-width: 500px; 
-            padding: 12px; 
-            border-radius: 25px; 
-            border: 2px solid #021F00; 
-            font-size: 16px;
-            outline: none;
-        }
+        #searchInput { width: 100%; max-width: 500px; padding: 12px; border-radius: 25px; border: 2px solid #021F00; font-size: 16px; outline: none; }
     </style>
-
-    <!-- Search Bar Script -->
     <script>
         function filterProducts() {
             let input = document.getElementById('searchInput').value.toLowerCase();
             let products = document.getElementsByClassName('product');
-            
             for (let i = 0; i < products.length; i++) {
                 let title = products[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
-                if (title.includes(input)) {
-                    products[i].style.display = "";
-                } else {
-                    products[i].style.display = "none";
-                }
+                if (title.includes(input)) { products[i].style.display = ""; }
+                else { products[i].style.display = "none"; }
             }
         }
     </script>
-    
 </head>
 <body>
-    <!-- The Bulldog Banner -->
     <div class="banner" style="width: 100%; height: 300px; background-image: url('banner.jpg'); background-position: center; background-size: 100% 100%; background-repeat: no-repeat;"></div>
     <div style="padding: 20px;"><a href="inventory-mirror.html" style="color: #021F00; font-weight: bold; text-decoration: none;">← Back to All Categories</a></div>
-    <!-- THE MISSING PIECE: The actual box for people to type in -->
     <div class="search-wrapper">
         <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Search Toys & Hobbies...">
     </div>
     <h1 style="margin-left: 20px; color: #021F00; font-family: 'Ultra', serif; font-size: 2.5em;">Toys & Hobbies</h1>
     <div id="product-container">
         <div class="product">
-            <script type="application/ld+json">
-            {
-              "@context": "https://schema.org/",
-              "@type": "Product",
-              "name": "*Rare Retired* TY Beanie Babies - Spike (Rhino) w/ 4 Errors - 1996 - PE Pellets",
-              "image": "https://i.ebayimg.com/00/s/OTMzWDE1NTI=/z/ppkAAOSw~mVlI2Hz/$_57.PNG?set_id=880000500F",
-              "description": "Quality part from Bulldog of the Pines.",
-              "sku": "386180784431",
-              "brand": {
-                "@type": "Brand",
-                "name": "Bulldog of the Pines"
-              },
-              "offers": {
-                "@type": "Offer",
-                "url": "https://ebay.com/itm/386180784431",
-                "priceCurrency": "USD",
-                "price": "15.29",
-                "availability": "https://schema.org/InStock",
-                "itemCondition": "https://schema.org/UsedCondition"
-              }
-            }
-            </script>
-            
-            <a href="https://ebay.com/itm/386180784431" target="_blank" style="text-decoration:none; color:inherit;">
+            <a href="https://www.ebay.com/itm/386180784431" target="_blank" style="text-decoration:none; color:inherit;">
                 <h3>*Rare Retired* TY Beanie Babies - Spike (Rhino) w/ 4 Errors - 1996 - PE Pellets</h3>
             </a>
-            <a href="https://ebay.com/itm/386180784431" target="_blank">
+            <a href="https://www.ebay.com/itm/386180784431" target="_blank">
                 <img src="https://i.ebayimg.com/00/s/OTMzWDE1NTI=/z/ppkAAOSw~mVlI2Hz/$_57.PNG?set_id=880000500F" alt="*Rare Retired* TY Beanie Babies - Spike (Rhino) w/ 4 Errors - 1996 - PE Pellets" style="max-width: 150px;">
             </a>
             <p class="price">$15.29</p>
             <p>Condition: Used</p>
-            <a href="https://ebay.com/itm/386180784431" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
+            <a href="https://www.ebay.com/itm/386180784431" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
         </div>
         <div class="product">
-            <script type="application/ld+json">
-            {
-              "@context": "https://schema.org/",
-              "@type": "Product",
-              "name": "*Rare Retired* TY Beanie Babies - Spike (Rhino) w/ 6 Errors - 1996 - PVC Pellets",
-              "image": "https://i.ebayimg.com/00/s/MTAwNlgxMzA4/z/0gYAAOSwKOJlI3VN/$_57.PNG?set_id=880000500F",
-              "description": "Quality part from Bulldog of the Pines.",
-              "sku": "386180864571",
-              "brand": {
-                "@type": "Brand",
-                "name": "Bulldog of the Pines"
-              },
-              "offers": {
-                "@type": "Offer",
-                "url": "https://ebay.com/itm/386180864571",
-                "priceCurrency": "USD",
-                "price": "28.89",
-                "availability": "https://schema.org/InStock",
-                "itemCondition": "https://schema.org/UsedCondition"
-              }
-            }
-            </script>
-            
-            <a href="https://ebay.com/itm/386180864571" target="_blank" style="text-decoration:none; color:inherit;">
+            <a href="https://www.ebay.com/itm/386180864571" target="_blank" style="text-decoration:none; color:inherit;">
                 <h3>*Rare Retired* TY Beanie Babies - Spike (Rhino) w/ 6 Errors - 1996 - PVC Pellets</h3>
             </a>
-            <a href="https://ebay.com/itm/386180864571" target="_blank">
+            <a href="https://www.ebay.com/itm/386180864571" target="_blank">
                 <img src="https://i.ebayimg.com/00/s/MTAwNlgxMzA4/z/0gYAAOSwKOJlI3VN/$_57.PNG?set_id=880000500F" alt="*Rare Retired* TY Beanie Babies - Spike (Rhino) w/ 6 Errors - 1996 - PVC Pellets" style="max-width: 150px;">
             </a>
             <p class="price">$28.89</p>
             <p>Condition: Used</p>
-            <a href="https://ebay.com/itm/386180864571" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
+            <a href="https://www.ebay.com/itm/386180864571" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
         </div>
         <div class="product">
-            <script type="application/ld+json">
-            {
-              "@context": "https://schema.org/",
-              "@type": "Product",
-              "name": "*Rare Retired* TY - Beanie Babies - Mel (Koala) w/ 6 Errors - 1996 - PVC Pellets",
-              "image": "https://i.ebayimg.com/00/s/OTEyWDEwOTc=/z/IyYAAOSwWXtlJF-2/$_57.PNG?set_id=880000500F",
-              "description": "Quality part from Bulldog of the Pines.",
-              "sku": "386182881328",
-              "brand": {
-                "@type": "Brand",
-                "name": "Bulldog of the Pines"
-              },
-              "offers": {
-                "@type": "Offer",
-                "url": "https://ebay.com/itm/386182881328",
-                "priceCurrency": "USD",
-                "price": "56.94",
-                "availability": "https://schema.org/InStock",
-                "itemCondition": "https://schema.org/UsedCondition"
-              }
-            }
-            </script>
-            
-            <a href="https://ebay.com/itm/386182881328" target="_blank" style="text-decoration:none; color:inherit;">
+            <a href="https://www.ebay.com/itm/386182881328" target="_blank" style="text-decoration:none; color:inherit;">
                 <h3>*Rare Retired* TY - Beanie Babies - Mel (Koala) w/ 6 Errors - 1996 - PVC Pellets</h3>
             </a>
-            <a href="https://ebay.com/itm/386182881328" target="_blank">
+            <a href="https://www.ebay.com/itm/386182881328" target="_blank">
                 <img src="https://i.ebayimg.com/00/s/OTEyWDEwOTc=/z/IyYAAOSwWXtlJF-2/$_57.PNG?set_id=880000500F" alt="*Rare Retired* TY - Beanie Babies - Mel (Koala) w/ 6 Errors - 1996 - PVC Pellets" style="max-width: 150px;">
             </a>
             <p class="price">$56.94</p>
             <p>Condition: Used</p>
-            <a href="https://ebay.com/itm/386182881328" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
+            <a href="https://www.ebay.com/itm/386182881328" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
         </div>
         <div class="product">
-            <script type="application/ld+json">
-            {
-              "@context": "https://schema.org/",
-              "@type": "Product",
-              "name": "*Rare Retired* TY Beanie Babies - Goldie (Goldfish) w/ 6 Errors 1993 PVC Pellets",
-              "image": "https://i.ebayimg.com/00/s/MTA3OVgxMzc0/z/smEAAOSwtNNlJGZT/$_57.PNG?set_id=880000500F",
-              "description": "Quality part from Bulldog of the Pines.",
-              "sku": "386182904653",
-              "brand": {
-                "@type": "Brand",
-                "name": "Bulldog of the Pines"
-              },
-              "offers": {
-                "@type": "Offer",
-                "url": "https://ebay.com/itm/386182904653",
-                "priceCurrency": "USD",
-                "price": "93.79",
-                "availability": "https://schema.org/InStock",
-                "itemCondition": "https://schema.org/UsedCondition"
-              }
-            }
-            </script>
-            
-            <a href="https://ebay.com/itm/386182904653" target="_blank" style="text-decoration:none; color:inherit;">
+            <a href="https://www.ebay.com/itm/386182904653" target="_blank" style="text-decoration:none; color:inherit;">
                 <h3>*Rare Retired* TY Beanie Babies - Goldie (Goldfish) w/ 6 Errors 1993 PVC Pellets</h3>
             </a>
-            <a href="https://ebay.com/itm/386182904653" target="_blank">
+            <a href="https://www.ebay.com/itm/386182904653" target="_blank">
                 <img src="https://i.ebayimg.com/00/s/MTA3OVgxMzc0/z/smEAAOSwtNNlJGZT/$_57.PNG?set_id=880000500F" alt="*Rare Retired* TY Beanie Babies - Goldie (Goldfish) w/ 6 Errors 1993 PVC Pellets" style="max-width: 150px;">
             </a>
             <p class="price">$93.79</p>
             <p>Condition: Used</p>
-            <a href="https://ebay.com/itm/386182904653" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
+            <a href="https://www.ebay.com/itm/386182904653" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
         </div>
         <div class="product">
-            <script type="application/ld+json">
-            {
-              "@context": "https://schema.org/",
-              "@type": "Product",
-              "name": "*Rare Retired* TY Beanie Babies - Lucky w/ 7 Errors - 95 with 93 Tush Tag - PVC",
-              "image": "https://i.ebayimg.com/00/s/OTY3WDEyMDA=/z/e1sAAOSw91FlJG9W/$_57.PNG?set_id=880000500F",
-              "description": "Quality part from Bulldog of the Pines.",
-              "sku": "386182965463",
-              "brand": {
-                "@type": "Brand",
-                "name": "Bulldog of the Pines"
-              },
-              "offers": {
-                "@type": "Offer",
-                "url": "https://ebay.com/itm/386182965463",
-                "priceCurrency": "USD",
-                "price": "133.99",
-                "availability": "https://schema.org/InStock",
-                "itemCondition": "https://schema.org/UsedCondition"
-              }
-            }
-            </script>
-            
-            <a href="https://ebay.com/itm/386182965463" target="_blank" style="text-decoration:none; color:inherit;">
+            <a href="https://www.ebay.com/itm/386182965463" target="_blank" style="text-decoration:none; color:inherit;">
                 <h3>*Rare Retired* TY Beanie Babies - Lucky w/ 7 Errors - 95 with 93 Tush Tag - PVC</h3>
             </a>
-            <a href="https://ebay.com/itm/386182965463" target="_blank">
+            <a href="https://www.ebay.com/itm/386182965463" target="_blank">
                 <img src="https://i.ebayimg.com/00/s/OTY3WDEyMDA=/z/e1sAAOSw91FlJG9W/$_57.PNG?set_id=880000500F" alt="*Rare Retired* TY Beanie Babies - Lucky w/ 7 Errors - 95 with 93 Tush Tag - PVC" style="max-width: 150px;">
             </a>
             <p class="price">$133.99</p>
             <p>Condition: Used</p>
-            <a href="https://ebay.com/itm/386182965463" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
+            <a href="https://www.ebay.com/itm/386182965463" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
         </div>
         <div class="product">
-            <script type="application/ld+json">
-            {
-              "@context": "https://schema.org/",
-              "@type": "Product",
-              "name": "*Rare Retired* TY - Beanie Babies - Goatee (Goat) - w/ 6 Errors - 1998 - PE",
-              "image": "https://i.ebayimg.com/00/s/MTE3NVgxMDY1/z/5~0AAOSw0R5lJHIg/$_57.PNG?set_id=880000500F",
-              "description": "Quality part from Bulldog of the Pines.",
-              "sku": "386182980454",
-              "brand": {
-                "@type": "Brand",
-                "name": "Bulldog of the Pines"
-              },
-              "offers": {
-                "@type": "Offer",
-                "url": "https://ebay.com/itm/386182980454",
-                "priceCurrency": "USD",
-                "price": "24.64",
-                "availability": "https://schema.org/InStock",
-                "itemCondition": "https://schema.org/UsedCondition"
-              }
-            }
-            </script>
-            
-            <a href="https://ebay.com/itm/386182980454" target="_blank" style="text-decoration:none; color:inherit;">
+            <a href="https://www.ebay.com/itm/386182980454" target="_blank" style="text-decoration:none; color:inherit;">
                 <h3>*Rare Retired* TY - Beanie Babies - Goatee (Goat) - w/ 6 Errors - 1998 - PE</h3>
             </a>
-            <a href="https://ebay.com/itm/386182980454" target="_blank">
+            <a href="https://www.ebay.com/itm/386182980454" target="_blank">
                 <img src="https://i.ebayimg.com/00/s/MTE3NVgxMDY1/z/5~0AAOSw0R5lJHIg/$_57.PNG?set_id=880000500F" alt="*Rare Retired* TY - Beanie Babies - Goatee (Goat) - w/ 6 Errors - 1998 - PE" style="max-width: 150px;">
             </a>
             <p class="price">$24.64</p>
             <p>Condition: Used</p>
-            <a href="https://ebay.com/itm/386182980454" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
+            <a href="https://www.ebay.com/itm/386182980454" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
         </div>
         <div class="product">
-            <script type="application/ld+json">
-            {
-              "@context": "https://schema.org/",
-              "@type": "Product",
-              "name": "*Rare Retired* TY - Beanie Babies - Stretch (Ostrich) - w/ 5 Errors - 1997 - PE",
-              "image": "https://i.ebayimg.com/00/s/MTQ5OVgxMDIz/z/OQYAAOSwrD9lJLpl/$_57.PNG?set_id=880000500F",
-              "description": "Quality part from Bulldog of the Pines.",
-              "sku": "386183437694",
-              "brand": {
-                "@type": "Brand",
-                "name": "Bulldog of the Pines"
-              },
-              "offers": {
-                "@type": "Offer",
-                "url": "https://ebay.com/itm/386183437694",
-                "priceCurrency": "USD",
-                "price": "28.04",
-                "availability": "https://schema.org/InStock",
-                "itemCondition": "https://schema.org/UsedCondition"
-              }
-            }
-            </script>
-            
-            <a href="https://ebay.com/itm/386183437694" target="_blank" style="text-decoration:none; color:inherit;">
+            <a href="https://www.ebay.com/itm/386183437694" target="_blank" style="text-decoration:none; color:inherit;">
                 <h3>*Rare Retired* TY - Beanie Babies - Stretch (Ostrich) - w/ 5 Errors - 1997 - PE</h3>
             </a>
-            <a href="https://ebay.com/itm/386183437694" target="_blank">
+            <a href="https://www.ebay.com/itm/386183437694" target="_blank">
                 <img src="https://i.ebayimg.com/00/s/MTQ5OVgxMDIz/z/OQYAAOSwrD9lJLpl/$_57.PNG?set_id=880000500F" alt="*Rare Retired* TY - Beanie Babies - Stretch (Ostrich) - w/ 5 Errors - 1997 - PE" style="max-width: 150px;">
             </a>
             <p class="price">$28.04</p>
             <p>Condition: Used</p>
-            <a href="https://ebay.com/itm/386183437694" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
+            <a href="https://www.ebay.com/itm/386183437694" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
         </div>
         <div class="product">
-            <script type="application/ld+json">
-            {
-              "@context": "https://schema.org/",
-              "@type": "Product",
-              "name": "*Rare Retired* TY - Beanie Babies - Chocolate (Moose) w/ 6 Errors - PVC Pellets",
-              "image": "https://i.ebayimg.com/00/s/NzkyWDE1NDM=/z/cIgAAOSwdvFlJL0e/$_57.PNG?set_id=880000500F",
-              "description": "Quality part from Bulldog of the Pines.",
-              "sku": "386183497487",
-              "brand": {
-                "@type": "Brand",
-                "name": "Bulldog of the Pines"
-              },
-              "offers": {
-                "@type": "Offer",
-                "url": "https://ebay.com/itm/386183497487",
-                "priceCurrency": "USD",
-                "price": "66.99",
-                "availability": "https://schema.org/InStock",
-                "itemCondition": "https://schema.org/UsedCondition"
-              }
-            }
-            </script>
-            
-            <a href="https://ebay.com/itm/386183497487" target="_blank" style="text-decoration:none; color:inherit;">
+            <a href="https://www.ebay.com/itm/386183497487" target="_blank" style="text-decoration:none; color:inherit;">
                 <h3>*Rare Retired* TY - Beanie Babies - Chocolate (Moose) w/ 6 Errors - PVC Pellets</h3>
             </a>
-            <a href="https://ebay.com/itm/386183497487" target="_blank">
+            <a href="https://www.ebay.com/itm/386183497487" target="_blank">
                 <img src="https://i.ebayimg.com/00/s/NzkyWDE1NDM=/z/cIgAAOSwdvFlJL0e/$_57.PNG?set_id=880000500F" alt="*Rare Retired* TY - Beanie Babies - Chocolate (Moose) w/ 6 Errors - PVC Pellets" style="max-width: 150px;">
             </a>
             <p class="price">$66.99</p>
             <p>Condition: Used</p>
-            <a href="https://ebay.com/itm/386183497487" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
+            <a href="https://www.ebay.com/itm/386183497487" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
         </div>
         <div class="product">
-            <script type="application/ld+json">
-            {
-              "@context": "https://schema.org/",
-              "@type": "Product",
-              "name": "*Rare Retired* TY - Beanie Babies - Peace (Bear) w/ 5 Errors - 1996 - PE Pellets",
-              "image": "https://i.ebayimg.com/00/s/MTUwN1gxMDEw/z/znIAAOSwQU9lJMvR/$_57.PNG?set_id=880000500F",
-              "description": "Quality part from Bulldog of the Pines.",
-              "sku": "386183578018",
-              "brand": {
-                "@type": "Brand",
-                "name": "Bulldog of the Pines"
-              },
-              "offers": {
-                "@type": "Offer",
-                "url": "https://ebay.com/itm/386183578018",
-                "priceCurrency": "USD",
-                "price": "150.74",
-                "availability": "https://schema.org/InStock",
-                "itemCondition": "https://schema.org/UsedCondition"
-              }
-            }
-            </script>
-            
-            <a href="https://ebay.com/itm/386183578018" target="_blank" style="text-decoration:none; color:inherit;">
+            <a href="https://www.ebay.com/itm/386183578018" target="_blank" style="text-decoration:none; color:inherit;">
                 <h3>*Rare Retired* TY - Beanie Babies - Peace (Bear) w/ 5 Errors - 1996 - PE Pellets</h3>
             </a>
-            <a href="https://ebay.com/itm/386183578018" target="_blank">
+            <a href="https://www.ebay.com/itm/386183578018" target="_blank">
                 <img src="https://i.ebayimg.com/00/s/MTUwN1gxMDEw/z/znIAAOSwQU9lJMvR/$_57.PNG?set_id=880000500F" alt="*Rare Retired* TY - Beanie Babies - Peace (Bear) w/ 5 Errors - 1996 - PE Pellets" style="max-width: 150px;">
             </a>
             <p class="price">$150.74</p>
             <p>Condition: Used</p>
-            <a href="https://ebay.com/itm/386183578018" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
+            <a href="https://www.ebay.com/itm/386183578018" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
         </div>
         <div class="product">
-            <script type="application/ld+json">
-            {
-              "@context": "https://schema.org/",
-              "@type": "Product",
-              "name": "*Rare Retired MWMT* TY - Beanie Babies - Peace (Bear) - w/ 8 Errors - 1996 - PE",
-              "image": "https://i.ebayimg.com/00/s/MTU0OVg5NTc=/z/1MoAAOSwlzBlJNDz/$_57.PNG?set_id=880000500F",
-              "description": "Quality part from Bulldog of the Pines.",
-              "sku": "386183599189",
-              "brand": {
-                "@type": "Brand",
-                "name": "Bulldog of the Pines"
-              },
-              "offers": {
-                "@type": "Offer",
-                "url": "https://ebay.com/itm/386183599189",
-                "priceCurrency": "USD",
-                "price": "174.19",
-                "availability": "https://schema.org/InStock",
-                "itemCondition": "https://schema.org/UsedCondition"
-              }
-            }
-            </script>
-            
-            <a href="https://ebay.com/itm/386183599189" target="_blank" style="text-decoration:none; color:inherit;">
+            <a href="https://www.ebay.com/itm/386183599189" target="_blank" style="text-decoration:none; color:inherit;">
                 <h3>*Rare Retired MWMT* TY - Beanie Babies - Peace (Bear) - w/ 8 Errors - 1996 - PE</h3>
             </a>
-            <a href="https://ebay.com/itm/386183599189" target="_blank">
+            <a href="https://www.ebay.com/itm/386183599189" target="_blank">
                 <img src="https://i.ebayimg.com/00/s/MTU0OVg5NTc=/z/1MoAAOSwlzBlJNDz/$_57.PNG?set_id=880000500F" alt="*Rare Retired MWMT* TY - Beanie Babies - Peace (Bear) - w/ 8 Errors - 1996 - PE" style="max-width: 150px;">
             </a>
             <p class="price">$174.19</p>
             <p>Condition: Used</p>
-            <a href="https://ebay.com/itm/386183599189" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
+            <a href="https://www.ebay.com/itm/386183599189" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
         </div>
         <div class="product">
-            <script type="application/ld+json">
-            {
-              "@context": "https://schema.org/",
-              "@type": "Product",
-              "name": "*Rare Retired * TY Beanie Babies - 1999 Signature Bear w/ 4 errors - PE Pellets",
-              "image": "https://i.ebayimg.com/00/s/MTQ5MVg4OTY=/z/~CEAAOSw52plJYFP/$_57.PNG?set_id=880000500F",
-              "description": "Quality part from Bulldog of the Pines.",
-              "sku": "386186664114",
-              "brand": {
-                "@type": "Brand",
-                "name": "Bulldog of the Pines"
-              },
-              "offers": {
-                "@type": "Offer",
-                "url": "https://ebay.com/itm/386186664114",
-                "priceCurrency": "USD",
-                "price": "40.49",
-                "availability": "https://schema.org/InStock",
-                "itemCondition": "https://schema.org/UsedCondition"
-              }
-            }
-            </script>
-            
-            <a href="https://ebay.com/itm/386186664114" target="_blank" style="text-decoration:none; color:inherit;">
+            <a href="https://www.ebay.com/itm/386186664114" target="_blank" style="text-decoration:none; color:inherit;">
                 <h3>*Rare Retired * TY Beanie Babies - 1999 Signature Bear w/ 4 errors - PE Pellets</h3>
             </a>
-            <a href="https://ebay.com/itm/386186664114" target="_blank">
+            <a href="https://www.ebay.com/itm/386186664114" target="_blank">
                 <img src="https://i.ebayimg.com/00/s/MTQ5MVg4OTY=/z/~CEAAOSw52plJYFP/$_57.PNG?set_id=880000500F" alt="*Rare Retired * TY Beanie Babies - 1999 Signature Bear w/ 4 errors - PE Pellets" style="max-width: 150px;">
             </a>
             <p class="price">$40.49</p>
             <p>Condition: Used</p>
-            <a href="https://ebay.com/itm/386186664114" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
+            <a href="https://www.ebay.com/itm/386186664114" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
         </div>
         <div class="product">
-            <script type="application/ld+json">
-            {
-              "@context": "https://schema.org/",
-              "@type": "Product",
-              "name": "*Rare Retired* TY - Beanie Babies - 1999 Signature Bear - w/ 5 Errors - PE",
-              "image": "https://i.ebayimg.com/00/s/MTUwN1g5Nzg=/z/5AQAAOSw-QdlJYho/$_57.PNG?set_id=880000500F",
-              "description": "Quality part from Bulldog of the Pines.",
-              "sku": "386186744570",
-              "brand": {
-                "@type": "Brand",
-                "name": "Bulldog of the Pines"
-              },
-              "offers": {
-                "@type": "Offer",
-                "url": "https://ebay.com/itm/386186744570",
-                "priceCurrency": "USD",
-                "price": "56.24",
-                "availability": "https://schema.org/InStock",
-                "itemCondition": "https://schema.org/UsedCondition"
-              }
-            }
-            </script>
-            
-            <a href="https://ebay.com/itm/386186744570" target="_blank" style="text-decoration:none; color:inherit;">
+            <a href="https://www.ebay.com/itm/386186744570" target="_blank" style="text-decoration:none; color:inherit;">
                 <h3>*Rare Retired* TY - Beanie Babies - 1999 Signature Bear - w/ 5 Errors - PE</h3>
             </a>
-            <a href="https://ebay.com/itm/386186744570" target="_blank">
+            <a href="https://www.ebay.com/itm/386186744570" target="_blank">
                 <img src="https://i.ebayimg.com/00/s/MTUwN1g5Nzg=/z/5AQAAOSw-QdlJYho/$_57.PNG?set_id=880000500F" alt="*Rare Retired* TY - Beanie Babies - 1999 Signature Bear - w/ 5 Errors - PE" style="max-width: 150px;">
             </a>
             <p class="price">$56.24</p>
             <p>Condition: Used</p>
-            <a href="https://ebay.com/itm/386186744570" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
+            <a href="https://www.ebay.com/itm/386186744570" target="_blank" style="color: #0066c0; text-decoration: none; font-weight: bold;">View on eBay</a>
         </div></div></body></html>

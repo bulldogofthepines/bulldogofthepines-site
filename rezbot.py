@@ -63,7 +63,7 @@ def build_aisle_page(cat_name, sub_df, filename):
         human_condition = str(row.get('raw_condition', row.get('condition', 'Used')))
         
         # THIRD: Now build the strings that use those variables
-        ebay_url = f"https://ebay.com/itm/{item_id}"
+        ebay_url = f"https://www.ebay.com/itm/{item_id}"
         full_desc = f"Quality item from Bulldog of the Pines: {title}. eBay Condition: {human_condition}"
 
         # --- THE PERMANENT FLOOR SIDE MISSION ---
@@ -89,7 +89,7 @@ def build_aisle_page(cat_name, sub_df, filename):
       "brand": {{ "@type": "Brand", "name": "Bulldog of the Pines" }},
       "offers": {{
         "@type": "Offer",
-        "url": f"https://bulldogofthepines.com/items/{item_id}.html",
+        "url": "https://bulldogofthepines.com/items/{item_id}.html",
         "priceCurrency": "USD",
         "price": "{price_clean}",
         "availability": "https://schema.org/InStock",

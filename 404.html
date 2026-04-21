@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirecting to Bulldog of the Pines...</title>
+    <script>
+        // Extracts the last part of the URL (your eBay ItemID)
+        var itemId = window.location.pathname.split('/').pop();
+        
+        if (itemId && itemId.length > 5 && !isNaN(itemId)) {
+            // Instant redirect to the actual eBay listing
+            window.location.replace("https://ebay.com" + itemId);
+        } else {
+            // Fallback for real typos: send them to the main inventory
+            window.location.replace("https://bulldogofthepines.com");
+        }
+    </script>
+</head>
+<body>
+    <p>Redirecting to our official eBay listing... <a href="https://bulldogofthepines.com">Click here if not redirected.</a></p>
+</body>
+</html>

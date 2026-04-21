@@ -56,14 +56,14 @@ def build_aisle_page(cat_name, sub_df, filename):
         item_id = str(row.get('id', row.get('ItemID', '')))
         title = str(row.get('title', row.get('Title', ''))).replace('"', "'")
         image = str(row.get('image_link', row.get('Image', '')))
-        price_val = str(row.get('price', '0.00')).replace(' USD', '').replace('$', '').strip()
+        price_clean = str(row.get('price', '0.00')).replace(' USD', '').replace('$', '').strip()
         gmc_condition = str(row.get('condition', 'used')).lower()
         
         # SECOND: Define the human condition BEFORE using it in the description
         human_condition = str(row.get('raw_condition', row.get('condition', 'Used')))
         
         # THIRD: Now build the strings that use those variables
-        ebay_url = f"https://ebay.com{item_id}"
+        ebay_url = f"https://ebay.com/itm/{item_id}"
         full_desc = f"Quality item from Bulldog of the Pines: {title}. eBay Condition: {human_condition}"
 
         # --- THE PERMANENT FLOOR SIDE MISSION ---
@@ -77,7 +77,7 @@ def build_aisle_page(cat_name, sub_df, filename):
 <head>
     <meta charset="UTF-8">
     <title>{title}</title>
-    <meta http-equiv="refresh" content="0; url=https://ebay.com/{item_id}">
+    <meta http-equiv="refresh" content="0; url=https://ebay.com/itm/{item_id}">
     <script type="application/ld+json">
     {{
       "@context": "https://schema.org/",
@@ -89,9 +89,9 @@ def build_aisle_page(cat_name, sub_df, filename):
       "brand": {{ "@type": "Brand", "name": "Bulldog of the Pines" }},
       "offers": {{
         "@type": "Offer",
-        "url": "https://ebay.com/{item_id}",
+        "url": "https://ebay.com/itm/{item_id}",
         "priceCurrency": "USD",
-        "price": "{price_val}",
+        "price": "{price_clean}",
         "availability": "https://schema.org/InStock",
         "itemCondition": "https://schema.org/{'NewCondition' if gmc_condition == 'new' else 'UsedCondition'}""
       }}

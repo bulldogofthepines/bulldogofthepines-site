@@ -45,7 +45,7 @@ def build_aisle_page(cat_name, sub_df, filename):
                                          .replace('{{item_id}}', item_id) \
                                          .replace('{{ebay_url}}', ebay_url) \
                                          .replace('{{human_condition}}', human_condition) \
-                                         .replace('{{condition_url}}', 'https://schema.org' if gmc_condition == 'new' else 'https://schema.org')
+                                         .replace('{{condition_url}}', 'https://schema.org/' if gmc_condition == 'new' else 'https://schema.org/')
 
         # Write the individual item landing page
         with open(os.path.join(items_dir, f"{item_id}.html"), "w", encoding="utf-8") as f:

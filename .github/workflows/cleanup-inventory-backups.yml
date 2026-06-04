@@ -1,0 +1,47 @@
+name: Cleanup Inventory Backups
+
+on:
+  schedule:
+    - cron: '0 9 * * *'   # Daily at 9am UTC (1 hour after listing-images cleanup)
+  workflow_dispatch:       # Allow manual trigger from GitHub UI
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # Full history needed to read commit dates
+
+      - name: Delete inventory backups older than 7 days
+        run: |
+          git config user.name "BoMaMeMo Cleanup Bot"
+          git config user.email "actions@github.com"
+
+          DELETED=0
+          NOW=$(date +%s)
+          CUTOFF=$((7 * 86400))
+
+          for file in inventory_backups/GMC_Upload_*.csv inventory_backups/bulldog_inventory_*.csv; do
+            [ -f "$file" ] || continue
+            COMMIT_TS=$(git log -1 --format="%ct" -- "$file")
+            if [ -z "$COMMIT_TS" ]; then continue; fi
+            AGE=$(( NOW - COMMIT_TS ))
+            if [ $AGE -gt $CUTOFF ]; then
+              echo "Deleting $file (age: $(( AGE / 86400 )) days)"
+              git rm "$file"
+              DELETED=$((DELETED + 1))
+            fi
+          done
+
+          if [ $DELETED -gt 0 ]; then
+            git commit -m "Auto-cleanup: removed $DELETED inventory backup(s) older than 7 days"
+            git push
+            echo "Removed $DELETED file(s)."
+          else
+            echo "Nothing to clean up."
+          fi

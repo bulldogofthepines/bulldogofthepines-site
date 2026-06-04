@@ -1,6 +1,6 @@
 # Separate project folders (not part of website)
 BoMaMeMo_project/
-listing-images/
+listing_images/
 
 # Security/Credentials
 bdotptoken.py

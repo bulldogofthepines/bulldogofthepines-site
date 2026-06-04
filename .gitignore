@@ -1,18 +1,12 @@
-# Separate project folders (not part of website)
-BoMaMeMo_project/
-listing_images/
-
 # Security/Credentials
-bdotptoken.py
 .env
 
-# Potentially Proprietary Logic for Bomo app
-engines/
+# Listing images — uploaded via GitHub API, not local git
+listing_images/
 
 # Data & Backups
 *.csv
 inventory_backups/
-latest_inventory.csv
 
 # Python System Files
 **/__pycache__/

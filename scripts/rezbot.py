@@ -1,9 +1,9 @@
 import os
 
-BASE_PATH = os.path.dirname(os.path.abspath(__file__))
+BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SAFETY CHECK: Load the template once at the start so we don't open/close it 500 times.
-template_path = os.path.join(BASE_PATH, 'item_template.html')
+template_path = os.path.join(BASE_PATH, 'pages', 'item_template.html')
 
 if not os.path.exists(template_path):
     print("CRITICAL ERROR: item_template.html not found in root directory!")
@@ -13,7 +13,7 @@ else:
         landing_template = t.read()
 
 def build_aisle_page(cat_name, sub_df, filename):
-    path = os.path.join(BASE_PATH, filename)
+    path = os.path.join(BASE_PATH, "pages", filename)
     
     # Create the drawer for individual item pages
     items_dir = os.path.join(BASE_PATH, 'items')
@@ -21,7 +21,7 @@ def build_aisle_page(cat_name, sub_df, filename):
         os.makedirs(items_dir)
 
     # 1. The Aisle Header (Kept exactly as original)
-    aisle_html = f"""<!DOCTYPE html> <html lang="en"> <head> <link href="https://googleapis.com" rel="stylesheet"> <meta charset="UTF-8"> <title>{cat_name} | Bulldog of the Pines</title> <meta name="robots" content="index, follow"> <link rel="canonical" href="https://bulldogofthepines.com/{filename}" /> <style> body {{ font-family: sans-serif; background: #f4f4f4; color: #333; margin: 0; padding: 0; }} #product-container {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 20px; }} .product {{ background: white; border: 1px solid #ddd; padding: 20px; border-radius: 8px; text-align: center; }} img {{ max-width: 100%; height: auto; border-radius: 4px; margin: 10px 0; }} .price {{ font-weight: bold; color: #b12704; font-size: 1.2rem; }} .search-wrapper {{ padding: 0 20px; margin-top: 20px; }} #searchInput {{ width: 100%; max-width: 500px; padding: 12px; border-radius: 25px; border: 2px solid #021F00; font-size: 16px; outline: none; }} </style> <script> function filterProducts() {{ let input = document.getElementById('searchInput').value.toLowerCase(); let products = document.getElementsByClassName('product'); for (let i = 0; i < products.length; i++) {{ let title = products[i].getElementsByTagName('h3')[0].innerText.toLowerCase(); if (title.includes(input)) {{ products[i].style.display = ""; }} else {{ products[i].style.display = "none"; }} }} }} </script> </head> <body> <div class="banner" style="width: 100%; height: 300px; background-image: url('banner.jpg'); background-position: center; background-size: 100% 100%; background-repeat: no-repeat;"></div> <div style="padding: 20px;"><a href="inventory-mirror.html" style="color: #021F00; font-weight: bold; text-decoration: none;">← Back to All Categories</a></div> <div class="search-wrapper"> <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Search {cat_name}..."> </div> <h1 style="margin-left: 20px; color: #021F00; font-family: 'Ultra', serif; font-size: 2.5em;">{cat_name}</h1> <div id="product-container">"""
+    aisle_html = f"""<!DOCTYPE html> <html lang="en"> <head> <link href="https://googleapis.com" rel="stylesheet"> <meta charset="UTF-8"> <title>{cat_name} | Bulldog of the Pines</title> <meta name="robots" content="index, follow"> <link rel="canonical" href="https://bulldogofthepines.com/pages/{filename}" /> <style> body {{ font-family: sans-serif; background: #f4f4f4; color: #333; margin: 0; padding: 0; }} #product-container {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 20px; }} .product {{ background: white; border: 1px solid #ddd; padding: 20px; border-radius: 8px; text-align: center; }} img {{ max-width: 100%; height: auto; border-radius: 4px; margin: 10px 0; }} .price {{ font-weight: bold; color: #b12704; font-size: 1.2rem; }} .search-wrapper {{ padding: 0 20px; margin-top: 20px; }} #searchInput {{ width: 100%; max-width: 500px; padding: 12px; border-radius: 25px; border: 2px solid #021F00; font-size: 16px; outline: none; }} </style> <script> function filterProducts() {{ let input = document.getElementById('searchInput').value.toLowerCase(); let products = document.getElementsByClassName('product'); for (let i = 0; i < products.length; i++) {{ let title = products[i].getElementsByTagName('h3')[0].innerText.toLowerCase(); if (title.includes(input)) {{ products[i].style.display = ""; }} else {{ products[i].style.display = "none"; }} }} }} </script> </head> <body> <div class="banner" style="width: 100%; height: 300px; background-image: url('../images/banner.jpg'); background-position: center; background-size: 100% 100%; background-repeat: no-repeat;"></div> <div style="padding: 20px;"><a href="inventory-mirror.html" style="color: #021F00; font-weight: bold; text-decoration: none;">← Back to All Categories</a></div> <div class="search-wrapper"> <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Search {cat_name}..."> </div> <h1 style="margin-left: 20px; color: #021F00; font-family: 'Ultra', serif; font-size: 2.5em;">{cat_name}</h1> <div id="product-container">"""
 
     # 2. The Product Logic
     for index, row in sub_df.iterrows():

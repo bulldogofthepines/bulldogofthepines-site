@@ -1,0 +1,26 @@
+# Separate project folders (not part of website)
+BoMaMeMo_project/
+listing-images/
+
+# Security/Credentials
+bdotptoken.py
+.env
+
+# Potentially Proprietary Logic for Bomo app
+engines/
+
+# Data & Backups
+*.csv
+inventory_backups/
+latest_inventory.csv
+
+# Python System Files
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Editor & OS Junk
+.vscode/
+.DS_Store
+Thumbs.db

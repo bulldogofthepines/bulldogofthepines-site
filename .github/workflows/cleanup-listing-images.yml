@@ -29,7 +29,7 @@ jobs:
           NOW=$(date +%s)
           CUTOFF=$((22 * 86400))
 
-          for file in listing-images/*.jpg; do
+          for file in listing_images/*.jpg; do
             [ -f "$file" ] || continue
             # Skip permanent assets (underscore prefix = never delete)
             [[ "$(basename $file)" == _* ]] && continue
@@ -44,7 +44,7 @@ jobs:
           done
 
           if [ $DELETED -gt 0 ]; then
-            git commit -m "Auto-cleanup: removed $DELETED listing image(s) older than 22 days"
+            git commit -m "Auto-cleanup: removed $DELETED listing_image(s) older than 22 days"
             git push
             echo "Removed $DELETED file(s)."
           else

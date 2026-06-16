@@ -33,6 +33,7 @@ jobs:
             [ -f "$file" ] || continue
             # Skip permanent assets (underscore prefix = never delete)
             [[ "$(basename $file)" == _* ]] && continue
+            [[ "$(basename $file)" == image_soon* ]] && continue
             COMMIT_TS=$(git log -1 --format="%ct" -- "$file")
             if [ -z "$COMMIT_TS" ]; then continue; fi
             AGE=$(( NOW - COMMIT_TS ))
